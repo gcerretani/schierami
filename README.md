@@ -1,16 +1,18 @@
 # Schierami
 
-**Schierami** e un assistente indipendente per il fantasy football italiano sulla Serie A.
+**Schierami** e un assistente indipendente per il fantasy football italiano sulla Serie A, specializzato nella scelta della formazione giornata per giornata.
 
-La prima versione e un plugin **skills-only** per ChatGPT e Codex. La Skill definisce un metodo ripetibile per:
+La prima versione e un plugin **skills-only** per ChatGPT e Codex. Parte dalla rosa dell'utente, fornita in qualunque forma utile:
 
-- scegliere formazione e ordine della panchina;
-- confrontare due o piu giocatori;
-- controllare probabili formazioni, ballottaggi, infortuni e squalifiche;
-- valutare matchup e statistiche recenti;
-- ragionare su svincolati, scambi e asta.
+- URL pubblico della lega;
+- screenshot o immagine;
+- lista o tabella;
+- file o export;
+- informazioni gia presenti nella conversazione.
 
-Il metodo privilegia informazioni aggiornate, cross-check tra fonti e trasparenza quando le fonti sono in disaccordo.
+Poi ragiona come un fantallenatore veterano: controlla probabili formazioni, infortuni, ballottaggi, ruolo tattico reale, piazzati, minutaggio atteso, matchup, congestione del calendario, rotazioni, statistiche sottostanti, modificatore e copertura della panchina.
+
+L'obiettivo e uno solo: **scegliere il miglior XI possibile per quella giornata, con modulo e panchina coerenti con le regole della lega**.
 
 ## Struttura
 
@@ -23,11 +25,9 @@ skills/schierami/
 docs/
 ```
 
-## Roadmap
+## Filosofia
 
-1. Pubblicare la versione skills-only nella directory ufficiale OpenAI.
-2. Aggiungere un'app/MCP opzionale per dati strutturati e privati della lega: rosa, crediti, svincolati, avversario e impostazioni.
-3. Integrare ulteriori fonti strutturate per stato giocatori e statistiche, quando legalmente e tecnicamente appropriato.
+Schierami non usa classifiche generiche o il nome del giocatore come scorciatoia. Le decisioni privilegiano minuti attesi, ruolo reale, contesto tattico, fonti aggiornate e valore atteso complessivo della formazione.
 
 ## Indipendenza
 
