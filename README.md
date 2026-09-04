@@ -76,6 +76,7 @@ skills/schierami/
   references/
 brand/
 docs/
+LICENSE
 ```
 
 ## Filosofia
@@ -87,3 +88,7 @@ Non promette di prevedere il calcio: cerca di prendere **decisioni migliori sott
 ## Indipendenza
 
 Schierami non e affiliato, sponsorizzato o approvato da Fantacalcio S.r.l., Lega Serie A, OpenAI, Sky, FotMob o dagli altri fornitori di dati citati nelle istruzioni della Skill. I nomi di terze parti sono usati solo per identificare piattaforme, competizioni o fonti informative.
+
+## Licenza
+
+Il progetto e distribuito sotto **MIT License**. Vedi `LICENSE`.
