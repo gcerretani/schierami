@@ -46,12 +46,12 @@ Schierami v0.1.0 is a **skills-only plugin** specialized in Italian Serie A fant
 
 ## Public URLs
 
-Until a dedicated website is deployed, the public repository can be used as the project website:
+Until a dedicated website is deployed, the public repository is the project website:
 
 - Website: https://github.com/gcerretani/schierami
 - Support: https://github.com/gcerretani/schierami/blob/main/docs/support.md
-- Privacy: https://github.com/gcerretani/schierami/blob/main/docs/privacy-draft.md
-- Terms: https://github.com/gcerretani/schierami/blob/main/docs/terms-draft.md
+- Privacy: https://github.com/gcerretani/schierami/blob/main/docs/privacy.md
+- Terms: https://github.com/gcerretani/schierami/blob/main/docs/terms.md
 
 ## Release notes draft
 
