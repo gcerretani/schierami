@@ -2,27 +2,41 @@
 
 Never assume the user's league settings or roster.
 
-Before making a recommendation that materially depends on league rules or roster membership, obtain the relevant context from one or more of these sources:
+## Supported inputs
 
-1. A public Leghe Fantacalcio league URL supplied by the user, such as `https://leghe.fantacalcio.it/<league-slug>`. Inspect public pages for roster/team information and league settings visible without authentication. See `public-league-pages.md`.
-2. A screenshot, image or other visual representation supplied in the conversation.
-3. A pasted list, table, export or file.
-4. Roster and rules already established in the current conversation.
-5. A direct user statement.
+Obtain league context from material the user has explicitly supplied in the conversation:
 
-A public league URL is sufficient when it exposes the information needed for the task. Do not require a specific input format if the roster can be reconstructed reliably from available context.
+1. screenshot or image of the roster;
+2. pasted player list or table;
+3. exported file;
+4. screenshot or pasted text of league settings;
+5. roster and rules already established in the conversation;
+6. direct user statements.
 
-Relevant settings and facts can include:
+A Leghe Fantacalcio URL can identify which league the user means, but the current skills-only version must not depend on automatically crawling or scraping the platform. See `public-league-pages.md`.
 
-- user's team and current roster;
-- allowed formations;
-- defensive modifier and exact formula;
-- substitutions and bench size/order rules;
-- scoring bonuses and penalties;
-- lineup deadline;
-- number of teams when strategically relevant;
-- current fantasy opponent or match context when publicly visible and useful.
+## Minimal rule checklist
 
-Do not waste time collecting settings that cannot change the lineup decision.
+Collect only settings that can change the recommendation. In priority order:
 
-If a required fact is not visible, do not infer it from another league or from platform defaults. If the missing setting could flip the recommendation, state the uncertainty. Otherwise proceed with the information available.
+1. **Allowed formations** - needed to compare legal modules.
+2. **Defensive modifier** - enabled/disabled and exact formula or table.
+3. **Substitutions** - maximum number, Traditional/Dynamic/Hybrid behavior, and any role constraints.
+4. **Bench and Switch behavior** - only when they change no-vote insurance or module flexibility.
+5. **Vote source and scoring peculiarities** - only when they materially change player value.
+6. **Head-to-head goal thresholds/bands** - only when the user wants opponent-aware risk optimization rather than pure expected points.
+7. **Lineup deadline** - needed for freshness and late-news handling.
+
+Other settings should be ignored unless they can change the XI.
+
+## Confidence handling
+
+Classify league inputs internally as:
+
+- **confirmed** - explicitly visible in user-provided material;
+- **stated** - explicitly told by the user;
+- **unknown** - not available.
+
+Never infer exact rules from platform defaults, previous lineups, observed scores, or another league.
+
+If a missing rule cannot change the recommended XI, proceed. If it can flip module, modifier value or substitution coverage, ask for one focused screenshot or one direct answer rather than requesting the whole regulation.
