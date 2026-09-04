@@ -2,7 +2,13 @@
 
 ## 1. League and roster facts
 
-Prefer connected league tools for private league facts such as roster, credits, opponent, available players and scoring settings. Do not search the public web for information that should come from the user's connected league.
+Prefer, in this order:
+
+1. Connected league tools for structured/private league facts such as roster, credits, opponent, available players and scoring settings.
+2. Public Leghe Fantacalcio pages when the user supplies a league URL or slug and the required data is visible without authentication. Treat these pages as valid first-party league context, not as generic web speculation. See `public-league-pages.md`.
+3. User-provided screenshots, exports or explicit statements.
+
+Do not require an MCP for data that the league itself exposes publicly. Conversely, do not attempt to bypass authentication, call undocumented private endpoints solely to evade access controls, or infer hidden values from unrelated public leagues.
 
 ## 2. Probable formations and availability
 
