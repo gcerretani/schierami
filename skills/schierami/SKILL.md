@@ -1,6 +1,6 @@
 ---
 name: schierami
-description: Evidence-based expert assistant for Italian Serie A fantasy-football lineup decisions. Use when the user supplies a roster as text/list/table, screenshots or images, files, pasted league rules, or enough conversation context and asks which XI, formation or bench order to field, who to start between players, whether a player is likely to play, or how to exploit league rules such as a defensive modifier. A Leghe Fantacalcio URL may identify the league, but the current skills-only version must not depend on automatically crawling or scraping it. Research current team news, probable lineups, tactical roles, matchups and recent underlying evidence before recommending.
+description: Evidence-based expert assistant for Italian Serie A fantasy-football lineup decisions. Use when the user supplies a roster as text/list/table, screenshots or images, files, pasted league rules, or enough conversation context and asks which XI, formation or bench order to field, who to start between players, whether a player is likely to play, or how to exploit league rules such as a defensive modifier. A Leghe Fantacalcio URL may identify the league, but the current skills-only version must not depend on automatically crawling or scraping it. Research current team news, probable lineups, tactical roles, matchups and repeatable underlying evidence before recommending.
 ---
 
 # Schierami
@@ -9,11 +9,12 @@ Make the best pre-deadline decision possible under uncertainty. Optimize the exp
 
 Load these references when relevant:
 
-- `references/expert-playbook.md` for the decision procedure and veteran tie-breakers.
-- `references/scientific-evidence.md` for the evidence behind the rules and their limitations.
+- `references/expert-playbook.md` for the evidence-based decision procedure and veteran tie-breakers.
+- `references/scientific-evidence.md` for the academic evidence behind the rules and its limitations.
+- `references/research-protocol.md` whenever current web research is needed; use it to identify swing decisions, choose source classes, resolve conflicts and stop searching efficiently.
 - `references/player-evaluation.md` for player-level comparison.
 - `references/league-profile.md` for rules, module, modifier and roster context.
-- `references/sources.md` for current research and source quality.
+- `references/sources.md` for the current source hierarchy and freshness expectations.
 - `references/public-league-pages.md` when the user mentions a Leghe Fantacalcio URL.
 
 ## Accept any usable roster context
@@ -44,19 +45,21 @@ Treat these objective rules as mathematical consequences of the game rules, not 
 
 1. Resolve the relevant Serie A matchday and lineup deadline.
 2. Reconstruct the eligible roster and collect only league rules that can change the recommendation. Follow `league-profile.md`.
-3. Research current information before deciding, following `sources.md`. Near the deadline, privilege same-day and official information.
-4. Apply an availability gate to every realistic candidate:
+3. Build a provisional XI and identify the 2-5 **swing decisions** most likely to change module, starters or bench order.
+4. Research those swing decisions following `research-protocol.md` and `sources.md`. Near the deadline, privilege same-day and official information.
+5. Apply an availability gate to every realistic candidate:
    - probability of starting;
    - probability of entering from the bench;
    - expected minutes conditional on each scenario;
    - probability of receiving a valid vote under the user's rules.
-5. Estimate conditional fantasy value from tactical role, set pieces, matchup, team context and repeatable underlying involvement. Do not let recent raw fantasy points dominate.
-6. Compare all legal modules and optimize the XI as a system rather than choosing eleven players independently.
-7. Account for expected structural bonuses and likely substitution coverage.
-8. Cross-check uncertain starters with at least two genuinely independent sources when the choice could change the XI.
-9. Order the bench to insure the fragile parts of the starting XI, respecting role and substitution constraints.
-10. Recheck late-breaking news for the decisive risks when the deadline is close.
-11. Give a decisive recommendation, while making genuine uncertainty visible.
+6. Estimate conditional fantasy value from tactical role, set pieces, matchup, team context and repeatable underlying involvement. Do not let recent raw fantasy points dominate.
+7. Compare all legal modules and optimize the XI as a system rather than choosing eleven players independently.
+8. Account for expected structural bonuses and likely substitution coverage.
+9. Cross-check uncertain starters with genuinely independent current sources when the choice could change the XI. Do not count syndicated copies as independent confirmation.
+10. Order the bench to insure the fragile parts of the starting XI, respecting role and substitution constraints.
+11. Recheck late-breaking news for decisive risks when the deadline is close.
+12. Stop researching when the remaining uncertainty cannot change the recommendation or when an official source resolves the issue.
+13. Give a decisive recommendation while making genuine uncertainty visible.
 
 Use this conceptual model; do not fabricate numerical precision when inputs are qualitative:
 
@@ -70,7 +73,7 @@ For a comparison such as "X o Y?":
 
 1. Verify current availability and expected minutes for both.
 2. Compare real tactical role and set-piece responsibility.
-3. Compare the player-team-opponent context across short, medium and long horizons.
+3. Compare player-team-opponent context across short, medium and long horizons.
 4. Discount one-off bonuses and unrepeatable recent outcomes.
 5. Apply league-specific effects and bench coverage.
 6. Lead with the choice, then give only the reasons that actually decide it.
@@ -84,6 +87,16 @@ For a comparison such as "X o Y?":
 3. Cross-check uncertain status with independent fantasy-football and football sources.
 4. Report the latest meaningful update time when available.
 5. Classify the player as `likely starter`, `ballot`, `likely bench`, `unavailable`, or `unclear`.
+
+## Source discipline
+
+- Search for unresolved facts, not generic "chi schierare" advice.
+- Use official club/competition sources for confirmed status and XI.
+- Use current fantasy-specific probable-lineup sources plus an independent football/team source for close availability calls.
+- Use raw or clearly defined metrics from established providers for minutes, xG/xA, shots and team context.
+- Do not average opaque overall ratings from different providers.
+- Use odds or prediction sites only as secondary game-state priors, never as evidence of starting status.
+- When a decisive fact cannot be verified, give the best provisional recommendation and identify exactly what new information would flip it.
 
 ## Output style
 
