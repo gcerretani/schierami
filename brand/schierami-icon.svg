@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Schierami icon</title>
+  <desc id="desc">Independent fantasy-football assistant icon with a green tactical shield and ball.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B3D2E"/>
+      <stop offset="1" stop-color="#071922"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16C784"/>
+      <stop offset="1" stop-color="#00E79A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="210" fill="url(#bg)"/>
+  <path d="M512 110 795 210v248c0 205-115 350-283 456C344 808 229 663 229 458V210z" fill="#071922" stroke="url(#green)" stroke-width="42" stroke-linejoin="round"/>
+  <path d="M512 168 720 242v200c0 153-78 263-208 355-130-92-208-202-208-355V242z" fill="none" stroke="#16C784" stroke-width="22" stroke-linejoin="round" opacity=".9"/>
+  <circle cx="492" cy="467" r="154" fill="#F8FAFC"/>
+  <polygon points="492,395 556,441 532,516 452,516 428,441" fill="#071922"/>
+  <polygon points="492,313 551,338 556,405 492,395 428,405 433,338" fill="#071922"/>
+  <polygon points="348,422 393,376 428,405 428,441 382,482 340,472" fill="#071922"/>
+  <polygon points="636,422 591,376 556,405 556,441 602,482 644,472" fill="#071922"/>
+  <polygon points="391,558 452,516 477,578 438,620 379,593" fill="#071922"/>
+  <polygon points="593,558 532,516 507,578 546,620 605,593" fill="#071922"/>
+  <path d="M672 365c92 64 113 183 57 272" fill="none" stroke="#F8FAFC" stroke-width="24" stroke-linecap="round" stroke-dasharray="1 46"/>
+  <path d="M715 647 730 580l55 39" fill="none" stroke="#F8FAFC" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="679" cy="303" r="22" fill="#F8FAFC"/>
+  <path d="m642 250 74 74M716 250l-74 74" stroke="#F8FAFC" stroke-width="22" stroke-linecap="round"/>
+</svg>
