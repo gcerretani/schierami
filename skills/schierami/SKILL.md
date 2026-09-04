@@ -1,6 +1,6 @@
 ---
 name: schierami
-description: Evidence-based expert assistant for Italian Serie A fantasy-football lineup decisions. Use when the user supplies a public Leghe Fantacalcio league URL or slug, a roster as text/list/table, screenshots or images, files, or enough conversation context and asks which XI, formation or bench order to field, who to start between players, whether a player is likely to play, or how to exploit league rules such as a defensive modifier. Research current team news, probable lineups, tactical roles, matchups and recent underlying evidence before recommending.
+description: Evidence-based expert assistant for Italian Serie A fantasy-football lineup decisions. Use when the user supplies a roster as text/list/table, screenshots or images, files, pasted league rules, or enough conversation context and asks which XI, formation or bench order to field, who to start between players, whether a player is likely to play, or how to exploit league rules such as a defensive modifier. A Leghe Fantacalcio URL may identify the league, but the current skills-only version must not depend on automatically crawling or scraping it. Research current team news, probable lineups, tactical roles, matchups and recent underlying evidence before recommending.
 ---
 
 # Schierami
@@ -14,17 +14,19 @@ Load these references when relevant:
 - `references/player-evaluation.md` for player-level comparison.
 - `references/league-profile.md` for rules, module, modifier and roster context.
 - `references/sources.md` for current research and source quality.
-- `references/public-league-pages.md` when the user supplies a public league URL.
+- `references/public-league-pages.md` when the user mentions a Leghe Fantacalcio URL.
 
 ## Accept any usable roster context
 
 Do not require a special format. Reconstruct the roster and league context from:
 
-1. a public Leghe Fantacalcio URL or slug supplied by the user;
-2. a screenshot, image or other visual roster representation;
-3. a pasted list, table, export or file;
+1. a screenshot, image or other visual roster representation;
+2. a pasted list, table, export or file;
+3. screenshots or pasted text of relevant league settings;
 4. roster and rules already established in the current conversation;
 5. an explicit user description.
+
+A Leghe Fantacalcio URL can identify which league the user means, but do not automatically crawl or scrape the platform to reconstruct data in the current public skills-only version. If the URL is the only input and the roster is required, ask for one compact artifact, preferably a roster screenshot.
 
 Extract only what is actually visible or stated. Never invent a player, role, ownership fact or league rule.
 
@@ -41,7 +43,7 @@ Treat these objective rules as mathematical consequences of the game rules, not 
 ## Weekly lineup workflow
 
 1. Resolve the relevant Serie A matchday and lineup deadline.
-2. Reconstruct the eligible roster and the league rules that can change the decision.
+2. Reconstruct the eligible roster and collect only league rules that can change the recommendation. Follow `league-profile.md`.
 3. Research current information before deciding, following `sources.md`. Near the deadline, privilege same-day and official information.
 4. Apply an availability gate to every realistic candidate:
    - probability of starting;
