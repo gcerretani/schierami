@@ -1,18 +1,18 @@
 {
   "name": "schierami",
   "version": "0.1.0",
-  "description": "Italian Serie A fantasy-football assistant for source-backed lineup, player, waiver, trade and auction decisions.",
+  "description": "Expert Italian Serie A fantasy-football lineup assistant for choosing the best XI, formation and bench using fresh team news and league context.",
   "repository": "https://github.com/gcerretani/schierami",
-  "keywords": ["serie-a", "fantasy-football", "lineups", "auction"],
+  "keywords": ["serie-a", "fantasy-football", "lineups", "probable-lineups"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Schierami",
-    "shortDescription": "Formazioni, ballottaggi e scelte fantasy con fonti aggiornate",
-    "longDescription": "Aiuta a scegliere formazione, panchina, svincolati, scambi e strategie d'asta usando fonti Serie A aggiornate e, quando disponibili, dati della propria lega.",
+    "shortDescription": "Il tuo esperto per scegliere formazione e panchina",
+    "longDescription": "Partendo dalla tua rosa o dalla tua lega, Schierami analizza titolarita, ballottaggi, ruolo tattico, matchup, forma sottostante, rotazioni, piazzati e regole della lega per consigliarti il miglior XI della giornata e l'ordine della panchina.",
     "category": "Sports",
     "capabilities": ["Read"],
     "defaultPrompt": [
-      "Che formazione metto questa giornata?",
+      "Questa e la mia rosa: che formazione metto questa giornata?",
       "Chi schiero tra questi due giocatori?",
       "Controlla titolarita e rischi dell'ultima ora della mia rosa."
     ]
