@@ -1,6 +1,6 @@
 ---
 name: schierami
-description: Assist with Italian Serie A fantasy-football decisions using fresh, source-backed information and league context. Use for weekly lineup choices, start/sit comparisons, bench order, probable starters, injuries and suspensions, set-piece roles, matchup analysis, waivers/free agents, trades, auction strategy, and opponent analysis. Prefer connected league tools when available; otherwise research current web sources and cross-check probable lineups and breaking team news before recommending players.
+description: Assist with Italian Serie A fantasy-football decisions using fresh, source-backed information and league context. Use for weekly lineup choices, start/sit comparisons, bench order, probable starters, injuries and suspensions, set-piece roles, matchup analysis, waivers/free agents, trades, auction strategy, and opponent analysis. Prefer connected league tools when available; otherwise use public league pages supplied by the user and current web sources, cross-checking probable lineups and breaking team news before recommending players.
 ---
 
 # Schierami
@@ -14,8 +14,12 @@ Use fresh evidence and explicit league rules to make practical Italian fantasy-f
    - Start/sit or player comparison -> follow **Player comparison workflow**.
    - Availability/titolarity question -> follow **Availability workflow**.
    - Auction, waivers or trades -> load `references/player-evaluation.md` and adapt the horizon from one match to rest-of-season value.
-2. Load `references/league-profile.md` whenever formation, module, modifier, budget or roster construction matters.
-3. If connected league tools are available, use them first for the user's roster, available players, opponent, credits and league settings. See `references/mcp-contract.md`.
+2. Load `references/league-profile.md` whenever formation, module, modifier, budget, roster ownership or roster construction matters.
+3. Retrieve league context in this order:
+   - connected league tools, when available;
+   - a public Leghe Fantacalcio league URL supplied by the user, following `references/public-league-pages.md`;
+   - screenshots, exports or explicit user statements.
+   Do not require an MCP for league facts that are already publicly visible.
 4. For time-sensitive Serie A facts, use current web research. Follow the source hierarchy and freshness rules in `references/sources.md`.
 5. Never make a final lineup recommendation from a single probable-lineup source when the choice is close or a player is a rotation risk.
 6. Distinguish facts from judgement. If sources disagree, say so and lower confidence instead of averaging away the disagreement.
