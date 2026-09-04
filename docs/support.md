@@ -14,7 +14,7 @@ When reporting a recommendation problem, include only information you are comfor
 
 Do not include private credentials in support requests. Schierami does not require access to private league accounts.
 
-For privacy information, see `docs/privacy-draft.md`.
+For privacy information, see `docs/privacy.md`.
 
 ## Independence
 
