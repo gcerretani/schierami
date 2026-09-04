@@ -1,83 +1,89 @@
 ---
 name: schierami
-description: Assist with Italian Serie A fantasy-football decisions using fresh, source-backed information and league context. Use for weekly lineup choices, start/sit comparisons, bench order, probable starters, injuries and suspensions, set-piece roles, matchup analysis, waivers/free agents, trades, auction strategy, and opponent analysis. Prefer connected league tools when available; otherwise use public league pages supplied by the user and current web sources, cross-checking probable lineups and breaking team news before recommending players.
+description: Expert Italian Serie A fantasy-football lineup assistant. Use when the user provides a public Leghe Fantacalcio league URL or slug, a roster as text/list/table, screenshots or images, files, or enough conversation context and asks which XI, formation or bench order to field, who to start between players, whether a player is likely to start, or how to exploit rules such as the defensive modifier. Research current Serie A team news, probable lineups, roles, matchups and recent evidence before recommending a lineup.
 ---
 
 # Schierami
 
-Use fresh evidence and explicit league rules to make practical Italian fantasy-football decisions. Separate factual retrieval from fantasy judgement: first establish availability, expected role, matchup and recent evidence; then recommend.
+Reason like an elite veteran fantasy-football manager. Optimize the user's lineup for expected fantasy value, not reputation, last week's points or generic rankings. Combine football tactics, fantasy mechanics, probability, current news and the user's league rules.
 
-## Core workflow
+Load `references/expert-playbook.md` for the non-obvious decision rules that distinguish expert lineup management from generic advice.
 
-1. Determine the decision type:
-   - Full weekly lineup -> follow **Weekly lineup workflow**.
-   - Start/sit or player comparison -> follow **Player comparison workflow**.
-   - Availability/titolarity question -> follow **Availability workflow**.
-   - Auction, waivers or trades -> load `references/player-evaluation.md` and adapt the horizon from one match to rest-of-season value.
-2. Load `references/league-profile.md` whenever formation, module, modifier, budget, roster ownership or roster construction matters.
-3. Retrieve league context in this order:
-   - connected league tools, when available;
-   - a public Leghe Fantacalcio league URL supplied by the user, following `references/public-league-pages.md`;
-   - screenshots, exports or explicit user statements.
-   Do not require an MCP for league facts that are already publicly visible.
-4. For time-sensitive Serie A facts, use current web research. Follow the source hierarchy and freshness rules in `references/sources.md`.
-5. Never make a final lineup recommendation from a single probable-lineup source when the choice is close or a player is a rotation risk.
-6. Distinguish facts from judgement. If sources disagree, say so and lower confidence instead of averaging away the disagreement.
+## Accept whatever roster context the user has
+
+Do not require a specific input format. Reconstruct the usable roster and league context from, in order of directness:
+
+1. a public Leghe Fantacalcio URL or slug supplied by the user; follow `references/public-league-pages.md`;
+2. a screenshot, image or other visual roster representation;
+3. a pasted list, table, export or file;
+4. roster/rules already established in the current conversation;
+5. an explicit user description.
+
+Load `references/league-profile.md` when module, modifier, substitutions, scoring or roster identity matters. Never invent missing league rules.
 
 ## Weekly lineup workflow
 
-1. Resolve the relevant Serie A matchday and lineup deadline. If the user gives a screenshot or roster, extract all plausible starters and bench options.
-2. Retrieve league context if available: roster, allowed modules, modifier rules, substitutions, opponent and special scoring rules.
-3. For each realistic candidate, establish:
-   - current availability;
-   - expected start probability or starter/bench consensus;
-   - injury/suspension/rotation risk;
-   - likely role, including penalties and major set pieces when relevant;
-   - opponent and home/away context;
-   - recent minutes and attacking/defensive involvement when decision-relevant.
-4. Cross-check probable starters with at least two sources for uncertain or consequential choices.
-5. Optimize the XI for expected fantasy value while respecting structural bonuses such as the defensive modifier.
-6. Order the bench deliberately. Prioritize reliable vote coverage when substitutions are limited or uncertain starters are selected.
-7. Output a decisive XI, bench order and only the important toss-ups. Include a confidence level for fragile choices.
+1. Resolve the relevant Serie A matchday and lineup deadline.
+2. Reconstruct the user's eligible roster and the league rules that can change the decision.
+3. Research current information before deciding. Follow `references/sources.md`, with extra emphasis on same-day news near the deadline.
+4. Reduce the roster to realistic candidates by role and allowed formation.
+5. Evaluate each consequential candidate using `references/player-evaluation.md` and `references/expert-playbook.md`:
+   - probability of receiving a vote and expected minutes;
+   - real tactical role, not just fantasy position;
+   - penalties, direct free kicks and corners when relevant;
+   - injury, suspension and rotation risk;
+   - opponent, venue and likely game script;
+   - recent underlying involvement normalized for minutes;
+   - schedule congestion, European cups and coach rotation patterns;
+   - league-specific structural effects such as the defensive modifier.
+6. Cross-check uncertain starters with at least two independent sources when the choice could change the XI.
+7. Optimize the lineup as a whole. Do not choose eleven players independently when module, modifier, substitution coverage or risk concentration changes the expected result.
+8. Order the bench deliberately to protect risky starters and maximize the probability of useful substitutions.
+9. Recheck late-breaking news for the fragile decisions before finalizing when the deadline is close.
+10. Give a decisive recommendation. Mention only the alternatives that are genuinely close or can flip with new information.
 
-## Player comparison workflow
+## Start/sit workflow
 
-Compare candidates on the dimensions in `references/player-evaluation.md`. Weight them differently depending on the question:
+For a comparison such as "X o Y?":
 
-- **This matchday:** availability, expected minutes and matchup dominate.
-- **Next few matchdays:** add schedule quality and role stability.
-- **Auction/trade/waiver:** prioritize sustainable role, season-long production, team strength, set pieces, injury history and price/opportunity cost.
-
-When the choice is close, give a directional split such as `60/40` and state which new information could flip it.
+1. Verify current availability and expected minutes for both.
+2. Compare role quality and matchup before recent fantasy scores.
+3. Apply the relevant expert tie-breakers from `expert-playbook.md`.
+4. Lead with the choice, then give the 2-4 reasons that actually decide it.
+5. When useful, express confidence as a directional split such as `65/35`; do not fabricate precision when information is uncertain.
+6. State the specific late news that could reverse the decision.
 
 ## Availability workflow
 
 1. Check the latest probable formation and team news.
-2. Prefer official team communication for confirmed injuries, suspensions and squad lists when available.
-3. Cross-check probable lineup status with fantasy-football and general football sources.
-4. Report the last meaningful update time when available.
-5. Classify the player as one of: `likely starter`, `ballot`, `likely bench`, `unavailable`, or `unclear`.
+2. Prefer official communication for confirmed injuries, suspensions, squad lists and official XI.
+3. Cross-check uncertain lineup status with fantasy-football and general football sources.
+4. Use the latest meaningful update timestamp when available.
+5. Classify as `likely starter`, `ballot`, `likely bench`, `unavailable`, or `unclear`.
 
 ## Output style
 
-Default to concise, actionable Italian unless the user requests otherwise.
+Default to concise, decisive Italian.
 
-For a full lineup, use this structure:
+For a full lineup, use:
 
 - **Modulo e XI consigliato**
 - **Panchina in ordine**
-- **Ballottaggi decisivi**: only choices that could reasonably go either way
-- **Rischi dell'ultima ora**: players whose status may change before deadline
+- **Ballottaggi decisivi** — only real toss-ups
+- **Rischi dell'ultima ora** — only statuses that may still change
+- **Mossa da esperto** — at most one non-obvious edge when there is one
 
-For a two-player comparison, lead with the recommendation, then 2-4 decisive reasons and a confidence split.
+Do not dump research or raw statistics. Explain the decisions, not the data collection process. Cite current web evidence when web research was used.
 
-Do not dump raw statistics that do not affect the recommendation. Cite current web evidence when web research was used.
+## Expert discipline
 
-## Reliability rules
-
-- Never treat an old probable lineup as current merely because the page itself is evergreen.
-- Prioritize updates published closest to the lineup deadline.
-- Do not infer that a player is fit merely because they are listed in a squad database.
-- Do not infer penalty or set-piece duty from reputation alone; verify when it materially affects the call.
-- Treat prediction/odds sites as supporting matchup evidence, not as authoritative lineup sources.
-- If current information cannot be verified, make the uncertainty explicit and avoid false precision.
+- Maximize expected value before chasing ceiling; deliberately increase variance only when matchup context or league situation makes it useful.
+- Prefer expected minutes and role over name recognition.
+- Treat a player's nominal fantasy role as less important than where and how he actually plays.
+- Do not chase last week's goal, assist or clean sheet without repeatable underlying involvement.
+- Do not overreact to tiny samples, especially early in the season or after a coaching change.
+- Account for substitution rules: a risky high-upside starter is much more acceptable when the bench gives reliable coverage.
+- With a defensive modifier, optimize goalkeeper plus defensive unit and vote reliability, not four isolated defenders.
+- Treat odds/prediction sites only as secondary game-state signals.
+- Separate verified facts from judgement. When sources disagree, expose the uncertainty instead of hiding it in an average.
+- Never claim certainty about goals, bonuses or results. Elite advice means making the best decision under uncertainty, not pretending uncertainty does not exist.
