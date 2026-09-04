@@ -62,8 +62,8 @@ La mappa completa evidenza -> regola operativa e in `skills/schierami/references
 
 ## Privacy, termini e supporto
 
-- Privacy: `docs/privacy-draft.md`
-- Termini: `docs/terms-draft.md`
+- Privacy: `docs/privacy.md`
+- Termini: `docs/terms.md`
 - Supporto: `docs/support.md`
 
 ## Struttura
