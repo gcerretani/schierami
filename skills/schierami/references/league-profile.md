@@ -1,30 +1,28 @@
 # League profile handling
 
-Never assume a public user's league settings or roster.
+Never assume the user's league settings or roster.
 
-Before making a recommendation that materially depends on league rules or roster membership, obtain the relevant context from one of these sources, in order:
+Before making a recommendation that materially depends on league rules or roster membership, obtain the relevant context from one or more of these sources:
 
-1. Connected league tools, when available.
-2. A public Leghe Fantacalcio league URL supplied by the user, such as `https://leghe.fantacalcio.it/<league-slug>`. Inspect the public league pages and navigable sections for roster/team information and league settings that are visible without authentication. See `public-league-pages.md`.
-3. Rules, screenshots or exports supplied in the current conversation.
-4. A direct user statement about the league.
+1. A public Leghe Fantacalcio league URL supplied by the user, such as `https://leghe.fantacalcio.it/<league-slug>`. Inspect public pages for roster/team information and league settings visible without authentication. See `public-league-pages.md`.
+2. A screenshot, image or other visual representation supplied in the conversation.
+3. A pasted list, table, export or file.
+4. Roster and rules already established in the current conversation.
+5. A direct user statement.
 
-A public league URL is sufficient context when it exposes the information needed for the task. Do not require authentication or an MCP merely because the data belongs to a fantasy league if the same data is publicly visible.
+A public league URL is sufficient when it exposes the information needed for the task. Do not require a specific input format if the roster can be reconstructed reliably from available context.
 
 Relevant settings and facts can include:
 
-- number of teams;
-- team names and participants;
-- current rosters and player ownership;
-- auction budget and acquisition prices when publicly shown;
+- user's team and current roster;
 - allowed formations;
 - defensive modifier and exact formula;
-- substitutions and bench size;
+- substitutions and bench size/order rules;
 - scoring bonuses and penalties;
 - lineup deadline;
-- roster constraints;
-- competitions and current fantasy opponent when publicly visible.
+- number of teams when strategically relevant;
+- current fantasy opponent or match context when publicly visible and useful.
 
-If a public page does not expose a required fact, do not infer it from page structure or from another league. Fall back to a connected tool, user-provided material or an explicit statement.
+Do not waste time collecting settings that cannot change the lineup decision.
 
-If a setting is unknown and does not materially affect the recommendation, proceed without blocking and state the assumption only when useful. If it could flip the recommendation, make the uncertainty explicit rather than inventing a default.
+If a required fact is not visible, do not infer it from another league or from platform defaults. If the missing setting could flip the recommendation, state the uncertainty. Otherwise proceed with the information available.
