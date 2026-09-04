@@ -1,28 +1,47 @@
-# Public Leghe Fantacalcio pages
+# Leghe Fantacalcio input handling
 
-Use this reference when the user provides a public league URL such as `https://leghe.fantacalcio.it/<league-slug>`.
+Use this reference when the user mentions or pastes a `leghe.fantacalcio.it` league URL.
 
-## Purpose
+## Policy and product rule
 
-Treat publicly visible league pages as first-party context for reconstructing the user's roster and any visible league rules needed to recommend the best lineup.
+Do not automatically crawl, scrape or traverse Leghe Fantacalcio pages to reconstruct a roster or league settings unless an explicitly authorized access method is available. Fantacalcio's current Terms of Use prohibit software or other mechanisms used to copy or access platform pages/content, including scraping, without express written authorization.
 
-## Workflow
+A league URL can still identify which league the user means, but it is not by itself a supported data-ingestion method for Schierami's public skills-only version.
 
-1. Open the league root URL supplied by the user.
-2. Follow visible/navigation links within the same league namespace.
-3. Look for pages or sections corresponding to squadre/rose, participants, competitions, calendar/results and settings.
-4. Extract only facts actually shown publicly: team names, player ownership, roster composition, competition context and relevant visible settings.
-5. Identify the user's team from the current conversation or ask only if it cannot be inferred and is necessary.
-6. Preserve source URLs and note if the page appears stale or season-mismatched.
-7. If a required fact is not public, use screenshots, lists, files or explicit context supplied by the user instead.
+## Supported league-context inputs
 
-## Important constraints
+Prefer user-provided material that is already in the conversation:
 
-- Publicly visible does not mean every setting is available; do not guess missing scoring rules or deadlines.
-- Do not bypass login or access controls.
-- Prefer the league's own public page over third-party copies for roster ownership.
-- Never transfer roster or settings information between similarly named leagues.
+- screenshot or image of the roster;
+- pasted player list or table;
+- exported file;
+- screenshot or pasted text of the relevant league rules;
+- roster/rules already established in the conversation.
 
-## Practical implication
+If the user provides only a Leghe Fantacalcio URL and the exact roster is required, ask for one compact artifact: preferably a screenshot of the roster. If a rule can materially change the XI, ask only for that rule or the relevant settings screenshot.
 
-If the public league page exposes the user's squad, Schierami can use it directly as roster input and then focus its research on the current Serie A matchday: probable lineups, injuries, tactical roles, matchups and other factors that affect who should be fielded.
+## What the platform can configure
+
+Official Leghe Fantacalcio guides show that league administrators can configure, among other things:
+
+- allowed formations and roster/bench composition;
+- Switch and lineup timeout;
+- number and type of substitutions;
+- office-reserve behavior;
+- vote source;
+- bonus/malus values;
+- head-to-head goal thresholds and bands;
+- goalkeeper, defense, midfield, attack and module modifiers;
+- other performance/captain factors depending on game mode.
+
+These describe what the platform supports, not what a specific league selected. Never infer a league's settings from platform defaults or from observed scores alone.
+
+## Known technical distinction
+
+Independent proof-of-concept work has shown that detailed settings can be retrieved from authenticated Leghe Fantacalcio API calls such as roster, lineup and calculation settings. Those calls require authenticated session data and are not evidence that the same values are publicly available from a league slug.
+
+Schierami's current public skills-only scope must not depend on those authenticated or undocumented endpoints.
+
+## Decision rule
+
+Collect only settings that can change the recommendation. If a missing setting cannot affect the XI, proceed. If it can flip module, modifier value or substitution insurance, make the assumption explicit or request one focused screenshot/paste.
