@@ -1,21 +1,21 @@
 # Support
 
-Schierami is an independent open-source project for Italian Serie A fantasy-football lineup decisions.
+For bugs, confusing recommendations, documentation issues or feature requests,
+open an issue in the [public GitHub tracker](https://github.com/gcerretani/schierami/issues).
+Reports may be written in English or Italian.
 
-## Get help
+Include the installed version, host, relevant matchday, a minimal synthetic or
+redacted roster/rule example, expected behavior and actual output. For calculator
+bugs, include reproducible JSON input and the command used. Avoid posting an
+entire conversation when a small example is enough.
 
-For bug reports, unexpected recommendations, documentation issues or feature requests, open an issue in the public repository:
+The issue tracker is public. Never post passwords, session tokens, private league
+exports or personal information. Schierami does not require those credentials.
+Do not post secrets even when reporting a security or privacy concern.
 
-https://github.com/gcerretani/schierami/issues
+Start with [installation](installation.md) for package and host questions,
+[the calculator contract](../skills/schierami/references/scoring-model.md) for
+supported automation, and [privacy](privacy.md) for data handling.
 
-When reporting a recommendation problem, include only information you are comfortable sharing publicly. Useful context can include the matchday, the relevant players, the league rule that affected the decision and the recommendation received. Do not publish passwords, private league credentials, personal access tokens or other secrets.
-
-## Security and privacy
-
-Do not include private credentials in support requests. Schierami does not require access to private league accounts.
-
-For privacy information, see `docs/privacy.md`.
-
-## Independence
-
-Schierami is not affiliated with, sponsored by or approved by Fantacalcio S.r.l., Lega Serie A, OpenAI or third-party data providers referenced by the Skill.
+This is an independent open-source project. A released package is not a promise
+of guaranteed prediction quality, platform approval or a support response time.

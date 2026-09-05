@@ -1,0 +1,22 @@
+{
+  "roster": [
+    {"id": "keeper", "name": "Synthetic Keeper", "roles": ["P"]},
+    {"id": "defender", "name": "Synthetic Defender", "roles": ["D"]}
+  ],
+  "lineup": {
+    "formation": "1-1",
+    "starters": [
+      {"player_id": "keeper", "slot": "P"},
+      {"player_id": "defender", "slot": "D1"}
+    ],
+    "bench": [],
+    "captain_id": "defender"
+  },
+  "rules": {
+    "starter_count": 2,
+    "bench_max": 1,
+    "formations": {"1-1": ["P", "D1"]},
+    "slot_eligibility": {"P": ["P"], "D1": ["D"]},
+    "captain_required": true
+  }
+}

@@ -12,13 +12,12 @@ Distinguish a rule unknown (which scoring function?) from a forecast unknown (wh
 ## Ask compactly and explain the impact
 
 Ask one focused question, or a small group that the same screenshot can answer.
+Examples below are written in English; ask them in the user's language:
 
-Examples:
-
-- "Il modificatore include il portiere e quali soglie usa? Questo puo cambiare la scelta tra quarto difensore e quarto centrocampista."
-- "Usate Basic, Easy o Master? Cambia l'ordine corretto della panchina Mantra."
-- "La giornata 4 e quella della lega o del campionato reale? I file indicano numerazioni diverse."
-- "Ci sono bonus/malus o regole di cambio personalizzati rispetto al regolamento che hai indicato?"
+- "Does the modifier include the goalkeeper, and which thresholds does it use? This may change the choice between a fourth defender and a fourth midfielder."
+- "Do you use Basic, Easy or Master? This changes the appropriate Mantra bench order."
+- "Does matchday 4 refer to the fantasy league or the real competition? The files use different numbering."
+- "Are there any custom bonuses, penalties or substitution rules beyond the ruleset you identified?"
 
 Never ask again for a known rule merely because a template has an empty field. Do not make users paste an entire regulation when one setting is enough.
 

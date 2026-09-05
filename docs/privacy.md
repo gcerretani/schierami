@@ -1,31 +1,40 @@
-# Privacy Policy
+# Privacy
 
-_Last updated: 4 September 2026_
+_Last updated: 5 September 2026_
 
-Schierami is an independent, skills-only assistant for Italian Serie A fantasy-football lineup decisions.
+Schierami is an independent skill for fantasy soccer lineup decisions. It has no
+hosted backend, account system, telemetry service or private database of its own.
 
-## Data handled
+## Information used
 
-Schierami does not operate its own backend service, user account system or private database. The Skill works with information the user chooses to provide in the ChatGPT conversation, such as roster screenshots, images, lists, files, league settings or other fantasy-football context.
+The host assistant works with material the user provides or authorizes it to
+access, such as roster screenshots, lists, exports and relevant league settings.
+When research tools are available, it may consult football news and public
+competition, club and statistics sources.
 
-When current information is needed, ChatGPT may consult publicly available web sources to evaluate fixtures, player availability, probable lineups, tactical roles, injuries and performance context.
+The bundled runtime calculators read JSON input and return results; they do not
+make network requests. Files or profiles created in the host environment remain
+subject to that environment's storage and retention controls. The absence of a
+Schierami backend does not mean the host stores no conversation data.
 
-## Credentials and private league access
+## Credentials and access
 
-Schierami does not require or request private league credentials. It does not instruct ChatGPT to bypass authentication, access controls or private endpoints. A Leghe Fantacalcio URL may be used only to identify the referenced league; the current skills-only release does not depend on crawling or scraping the platform.
+Schierami does not ask for passwords or session tokens in chat and does not
+instruct the assistant to bypass access controls. Connected services, where
+available and authorized, retain their own access and privacy conditions.
+The current Leghe Fantacalcio adapter does not depend on automatic league-page
+scraping or undocumented authenticated endpoints.
 
-## Storage and processing
+## Storage and third parties
 
-Schierami itself does not independently store conversation data. Data handling by ChatGPT is governed by the OpenAI terms, privacy policy and settings applicable to the user's ChatGPT account and plan.
+The host's terms, privacy policy and account/workspace settings govern its
+processing. External sources and connectors may have separate practices.
+Schierami does not control those services. Do not publish private league material
+in this repository or attach it to a public support issue.
 
-## Third-party sources
+## Questions
 
-Public football, club, competition, news and statistics sources may be consulted when useful. Schierami is not affiliated with those providers and does not control their privacy practices.
-
-## Contact and support
-
-For privacy questions, bug reports or removal requests concerning the Schierami project, use the public GitHub repository issue tracker or the support information published in `docs/support.md`.
-
-## Independence
-
-Schierami is not affiliated with, sponsored by or approved by Fantacalcio S.r.l., Lega Serie A, OpenAI or any third-party data provider mentioned by the Skill.
+See [support](support.md) for the project issue tracker. Report only information
+that can safely be public; do not send personal records or credentials to explain
+a privacy problem. Schierami is not affiliated with or endorsed by OpenAI,
+Fantacalcio S.r.l., leagues, clubs or the data providers it references.

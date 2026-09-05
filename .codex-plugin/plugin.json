@@ -1,16 +1,36 @@
 {
   "name": "schierami",
-  "version": "0.2.0",
-  "description": "Evidence-informed fantasy-soccer lineup assistant for Classic, Mantra and custom leagues, with rule-aware clarification, current research and deterministic checks.",
+  "version": "0.2.1",
+  "description": "Rule-aware fantasy soccer lineup assistant for Classic, Mantra, and custom leagues.",
+  "homepage": "https://github.com/gcerretani/schierami",
   "repository": "https://github.com/gcerretani/schierami",
-  "keywords": ["fantasy-football","fantacalcio","classic","mantra","formazione","lineup","probabili-formazioni","modificatori"],
+  "license": "MIT",
+  "keywords": [
+    "fantasy-soccer",
+    "fantasy-football",
+    "fantacalcio",
+    "classic",
+    "mantra",
+    "lineup",
+    "team-news",
+    "modifiers"
+  ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Schierami",
-    "shortDescription": "Il tuo esperto per scegliere formazione e panchina",
-    "longDescription": "Schierami ricostruisce rosa e regole reali della competizione, chiede solo le informazioni mancanti che possono cambiare la decisione, verifica news e dati attuali quando disponibili e confronta intere formazioni legali. Supporta Classic, Mantra e regolamenti personalizzati senza dipendere da una singola piattaforma o da impostazioni presunte.",
+    "shortDescription": "Rule-aware fantasy soccer lineup and bench advice",
+    "longDescription": "Schierami combines your roster, actual league rules, and current football evidence to recommend legal lineups, bench order, captain choices, and close-call decisions. It supports Classic, Mantra, and custom association-football fantasy leagues without assuming one platform, competition, or scoring preset.",
     "category": "Sports",
     "capabilities": ["Read"],
-    "defaultPrompt": ["Questa e la mia rosa: che formazione metto questa giornata?","Chi schiero tra questi due giocatori con le regole della mia lega?","Controlla titolarita, regole decisive e rischi dell'ultima ora della mia rosa."]
+    "websiteURL": "https://github.com/gcerretani/schierami",
+    "privacyPolicyURL": "https://github.com/gcerretani/schierami/blob/main/docs/privacy.md",
+    "termsOfServiceURL": "https://github.com/gcerretani/schierami/blob/main/docs/terms.md",
+    "defaultPrompt": [
+      "Here is my roster. What lineup and bench should I use this matchday?",
+      "Who should I start between these players under my league rules?",
+      "Check the current availability and rule-sensitive risks in my lineup."
+    ],
+    "composerIcon": "./skills/schierami/assets/schierami-icon.svg",
+    "logo": "./skills/schierami/assets/schierami-icon.svg"
   }
 }

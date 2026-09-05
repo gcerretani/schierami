@@ -1,64 +1,39 @@
-# OpenAI Plugin Directory submission checklist
+# OpenAI directory submission
 
-Schierami v0.1.0 is a **skills-only plugin** specialized in Italian Serie A fantasy-football lineup decisions.
+A GitHub release, a ChatGPT skill upload, workspace sharing and public plugin
+directory approval are different operations. This repository automates only its
+own GitHub releases and does not claim an approved public listing.
 
-## Listing draft
+OpenAI's current submission documentation explicitly supports skills-only plugins.
+The submission portal is [platform.openai.com/plugins](https://platform.openai.com/plugins).
+At the time this document was checked, a submitter needed an organization role
+with **Apps Management: Write** and a verified developer or business identity.
+Confirm those requirements in the live portal before submitting.
 
-**Name:** Schierami
+## Prepare the submission
 
-**Short description:** Il tuo esperto per scegliere formazione e panchina.
+Use a tested release rather than a ZIP assembled from a working folder. For a
+skills-only submission, upload the final skill bundle requested by the portal.
+Do not invent an MCP server, authentication flow or external data integration:
+Schierami currently has none.
 
-**Long description:** Schierami e un assistente indipendente per il fantasy football italiano sulla Serie A. Parte dalla rosa e dalle regole fornite dall'utente tramite screenshot, lista, tabella, file o contesto gia presente nella conversazione. Analizza titolarita, minutaggio atteso, ruolo tattico reale, piazzati, matchup, rotazioni, congestione del calendario, statistiche sottostanti e regole della lega per consigliare il miglior XI, il modulo e l'ordine della panchina con un metodo evidence-based.
+Use [the plugin manifest](../.codex-plugin/plugin.json) as the canonical source for
+English listing copy and starter prompts. Use the
+[skill icon](../skills/schierami/assets/schierami-icon.svg) where its format is
+accepted, and provide the public [privacy](privacy.md), [terms](terms.md) and
+[support](support.md) pages. Release notes come from [CHANGELOG.md](../CHANGELOG.md),
+not from a separate submission draft.
 
-**Category:** Sports
+Before upload, run the automated checks and the relevant
+[behavioral scenarios](../evals/README.md), then test the packaged skill in the
+target host. Describe calculator coverage and current-data dependencies accurately;
+do not claim complete Mantra automation or measured predictive superiority.
 
-**Brand payoff:** Il tuo assistente scientifico per il fantasy football italiano.
+OpenAI reviews the draft before publication. Approval status is managed in the
+portal; successful GitHub CI or a local skill scan is not directory approval.
 
-## Starter prompts
+Official references checked 2026-09-05:
 
-- Questa e la mia rosa: che formazione metto questa giornata?
-- Chi schiero tra questi due giocatori?
-- Controlla titolarita e rischi dell'ultima ora della mia rosa.
-- Quali difensori conviene schierare se nella mia lega c'e il modificatore difesa?
-- Ti mando lo screenshot della mia rosa e delle regole: scegli modulo, XI e panchina.
-
-## Positive tests
-
-1. **Roster screenshot + full XI.** User supplies a roster screenshot and asks for the best XI for the current matchday. Expected: reconstruct roster, identify swing decisions, research current fixtures/news, respect stated league rules, return module, XI, bench and key risks.
-2. **Missing decisive league rule.** User supplies a roster but says only that there is a defensive modifier without giving the formula. Expected: provide a provisional recommendation if possible and ask only for the specific modifier screenshot/text if the formula could flip the module; never invent defaults.
-3. **Start/sit comparison.** User asks "Zaccagni o Orsolini questa giornata?" Expected: compare current availability, expected minutes, tactical role, set pieces, matchup and repeatable underlying evidence; give a decisive recommendation and the condition that could reverse it.
-4. **Doubtful starter near deadline.** User asks whether a doubtful player will start. Expected: use the latest probable formations and team news, privilege official sources, cross-check genuinely independent reports, classify status and cite current evidence.
-5. **Defensive modifier optimization.** User asks which defenders to field with a defensive modifier. Expected: optimize goalkeeper plus defensive unit and structural modifier value rather than ranking defenders independently; account for vote reliability and bench coverage.
-
-## Additional QA tests before submission
-
-- early-season tiny-sample case: do not chase a two-match scoring streak without role/minutes support;
-- post-European fixture: increase rotation uncertainty without applying an automatic benching rule;
-- conflicting probable-lineup sources: preserve scenarios and lower information confidence;
-- poor bench coverage: prefer valid-vote probability when a speculative starter creates excessive no-vote risk;
-- user provides only a Leghe Fantacalcio URL: do not crawl/scrape it; request one compact roster screenshot or pasted list if roster data is needed.
-
-## Negative tests
-
-1. User asks for NFL fantasy advice. Expected: do not invoke Schierami as an Italian Serie A workflow.
-2. User asks for a generic explanation of the offside rule. Expected: answer normally; Schierami is not needed.
-3. User asks for historical Serie A trivia unrelated to a lineup decision. Expected: do not force the Schierami workflow.
-
-## Public URLs
-
-Until a dedicated website is deployed, the public repository is the project website:
-
-- Website: https://github.com/gcerretani/schierami
-- Support: https://github.com/gcerretani/schierami/blob/main/docs/support.md
-- Privacy: https://github.com/gcerretani/schierami/blob/main/docs/privacy.md
-- Terms: https://github.com/gcerretani/schierami/blob/main/docs/terms.md
-
-## Release notes draft
-
-**Schierami 0.1.0**
-
-Initial public release. Evidence-based Serie A fantasy-football lineup assistant for choosing module, XI and bench. Uses current team news, expected minutes, tactical role, set pieces, matchup, repeatable performance indicators, league-specific rules, defensive-modifier logic and substitution coverage. The decision process is backed by a documented evidence map covering fantasy-sports optimization, football analytics, uncertainty and common decision biases.
-
-## Manual platform requirements
-
-The submitter must complete the OpenAI-side requirements in the official submission flow, including developer/business identity verification if requested, required Apps Management permission, geographic availability selection, logo upload, final metadata review and submission for review.
+- [Submit plugins](https://developers.openai.com/plugins/deploy/submission)
+- [Package plugins](https://developers.openai.com/plugins/build/plugins)
+- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066)

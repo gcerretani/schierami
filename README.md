@@ -1,81 +1,78 @@
 # Schierami
 
-**Schierami** e un assistente indipendente ed evidence-informed per le decisioni di formazione nel fantasy football.
+**Fantasy soccer lineup advice built around your league's actual rules.**
 
-> **Regole reali, fonti attuali, decisioni sotto incertezza.**
+Schierami is an independent skill for ChatGPT and Codex. It helps choose your
+starting lineup, formation, captain and bench order using your roster, your rules
+and the current football information available to the host assistant.
 
-La skill non assume che ogni lega sia Serie A, Leghe Fantacalcio o Classic. Separa il campionato reale, la competizione fantasy, il sistema di gioco e la piattaforma; accetta rose e regolamenti da screenshot, file, export, testo, URL utilizzabili o contesto gia disponibile.
+It is designed for association football (soccer), including Italian fantacalcio,
+not American fantasy football. Classic, Mantra and custom leagues are handled as
+distinct rule systems, regardless of platform or real-world competition.
 
-## Cosa cambia nella 0.2
+**The repository is written in English. Advice follows the user's language,
+including Italian.** English documentation does not impose English responses.
 
-- supporto esplicito a **Classic, Mantra e regolamenti personalizzati**;
-- profilo di lega con provenienza e stati `confirmed`, `user_stated`, `hypothesis`, `unknown`, `conflicted` e `not_applicable`;
-- politica di chiarimento: cerca prima nei dati accessibili e chiede all'utente solo cio che puo cambiare la scelta;
-- separazione tra ricerca sportiva, interpretazione delle regole e calcolo deterministico;
-- gerarchia delle fonti per tipo di informazione, non una lista di siti obbligatori;
-- gestione esplicita di soglie non lineari, sostituzioni, modificatori, panchina e obiettivi head-to-head;
-- script opzionali per validare una formazione e calcolare scenari supportati, con errori espliciti sulle regole non implementate;
-- test di regressione per evitare duplicati, formazioni illegali e calcoli silenziosamente incompleti.
+## Get started
 
-## Metodo
+Download **`skill.zip`** from the [latest GitHub release](https://github.com/gcerretani/schierami/releases/latest)
+and follow the [installation guide](docs/installation.md). The separate
+`schierami-plugin.zip` contains the plugin manifest and bundled skill; it is not
+the same upload format as a standalone skill.
 
-Schierami segue un flusso decision-first:
+Provide a roster screenshot, list or export, identify the matchday, and include
+relevant league settings when available. For example:
 
-1. recupera rosa, competizione e regole gia disponibili;
-2. distingue fatti confermati, ipotesi, conflitti e dati mancanti;
-3. chiede una regola privata solo se valori plausibili possono cambiare legalita o raccomandazione;
-4. costruisce una formazione provvisoria e identifica pochi **swing decisions**;
-5. ricerca solo i fatti pubblici che possono ribaltare quelle scelte;
-6. combina disponibilita, minutaggio, ruolo tattico, piazzati, matchup e indicatori sottostanti;
-7. confronta intere formazioni legali, includendo sostituzioni e bonus strutturali secondo l'ordine reale delle regole;
-8. espone assunzioni, limiti e la notizia o regola che potrebbe cambiare il consiglio.
+> Here is my roster. Pick the lineup and bench for the next matchday. We use a
+> defensive modifier; ask me for its formula if it changes the best formation.
 
-Una regola chiamata "modificatore difesa" o un'etichetta come "Mantra" non viene trattata come formula completa: se la configurazione esatta conta, Schierami la verifica o la chiede.
+Schierami reuses accessible context before asking questions. If a missing rule
+could change the decision, it asks for that specific rule instead of assuming a
+platform default. With incomplete information it gives useful conditional advice,
+not invented certainty.
 
-## Evidence-informed, non infallibile
+## What it does
 
-La letteratura accademica viene usata per definire priorita e ridurre bias: ottimizzazione vincolata della formazione, valore del minutaggio, regressione della forma recente, uso prudente di xG/xA, differenze tra rating, fixture congestion e decisioni sotto osservabilita parziale. La mappa evidenza -> regola operativa e in `skills/schierami/references/scientific-evidence.md`.
+- Compares complete legal lineups, including positional constraints, substitutes
+  and rule-dependent bonuses, rather than ranking players in isolation.
+- Focuses research on the few uncertain choices that could change the lineup,
+  using current sources appropriate to the competition and the question.
+- Separates confirmed facts, assumptions, unresolved rules and sporting forecasts;
+  explains the information that would reverse a close recommendation.
 
-Gli articoli non dimostrano chi segnera nella prossima giornata. Le informazioni correnti vengono cercate nelle fonti appropriate alla domanda e alla competizione; una fonte e considerata usata solo se e stata realmente consultata per un fatto decisivo.
+The method is informed by research on fantasy sports and football analytics.
+See the [evidence-to-rule map](skills/schierami/references/scientific-evidence.md)
+for papers, transfer limits and mathematical deductions. These references do not
+prove that this skill has better predictive performance than alternatives.
 
-## Struttura
+## Scope and limits
 
-```text
-.codex-plugin/plugin.json
-skills/schierami/
-  SKILL.md
-  agents/openai.yaml
-  references/
-  schemas/
-  examples/
-  scripts/
-  tests/
-docs/
-brand/
-LICENSE
-```
+Schierami has no hosted backend, account service or automatic lineup submission.
+Research, file access and optional Python execution depend on the host's tools
+and permissions. It does not request passwords or session tokens.
 
-I calcolatori in `scripts/` sono volutamente limitati: validano input espliciti e scenari supportati, ma non simulano ogni piattaforma e non inventano probabilita. Una regola non supportata deve restare visibile e viene gestita manualmente o con un motore verificato, mai ignorata.
+Classic, Mantra and custom-rule **guidance** does not mean a complete executable
+scoring engine for every platform. The two bundled calculators check explicit
+lineup constraints and a limited scenario contract. They do not forecast players
+or implement the full Mantra substitution algorithm. See the
+[calculator contract](skills/schierami/references/scoring-model.md).
 
-## Riferimenti scientifici principali
+## Project map
 
-- O'Brien, Gleeson & O'Sullivan (2021), *Identification of skill in an online game: The case of Fantasy Premier League*. https://doi.org/10.1371/journal.pone.0246698
-- Bonomo, Duran & Marenco (2014), *Mathematical programming as a tool for virtual soccer coaches*. https://doi.org/10.1111/itor.12068
-- Bhatt et al. (2019), *Who Should Be the Captain This Week?* https://doi.org/10.1609/icwsm.v13i01.3213
-- Pappalardo et al. (2019), *PlayeRank*. https://doi.org/10.1145/3343172
-- Julian, Page & Harper (2021), fixture congestion meta-analysis. https://doi.org/10.1007/s40279-020-01359-9
-- Scholtes & Karakus (2024), *Bayes-xG*. https://doi.org/10.3389/fspor.2024.1348983
+| Location | Purpose |
+| --- | --- |
+| [skills/schierami](skills/schierami) | Installable workflow, references, examples, schemas, scripts and icon. |
+| [.codex-plugin/plugin.json](.codex-plugin/plugin.json) | Plugin identity, listing metadata and canonical version. |
+| [docs](docs/README.md) | Installation, development, release and submission guides. |
+| [tools](tools) and [tests](tests) | Maintainer tooling and automated checks; excluded from installable bundles. |
+| [CHANGELOG.md](CHANGELOG.md) | Version history and the source of GitHub release notes. |
 
-## Privacy, termini e indipendenza
+For development, start with [CONTRIBUTING.md](CONTRIBUTING.md).
+For help, see [support](docs/support.md), [privacy](docs/privacy.md) and
+[terms of use](docs/terms.md).
 
-Schierami non deve pubblicare rose o regolamenti privati nel repository. Usa soltanto modalita di accesso disponibili e autorizzate; non richiede password o token di sessione in chat.
+## License and independence
 
-- Privacy: `docs/privacy.md`
-- Termini: `docs/terms.md`
-- Supporto: `docs/support.md`
-
-Schierami non e affiliato, sponsorizzato o approvato da Fantacalcio S.r.l., Lega Serie A, OpenAI o dai fornitori citati. I nomi di terze parti identificano soltanto piattaforme, competizioni o fonti informative.
-
-## Licenza
-
-MIT License. Vedi `LICENSE`.
+[MIT License](LICENSE). Schierami is not affiliated with or endorsed by OpenAI,
+Fantacalcio S.r.l., any league, club or data provider. A GitHub release is a project
+release, not approval or publication in a third-party plugin directory.

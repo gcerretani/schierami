@@ -1,3 +1,5 @@
 interface:
   display_name: "Schierami"
-  short_description: "Formazione fantasy evidence-informed per Classic, Mantra e regole personalizzate"
+  short_description: "Rule-aware fantasy soccer lineup and bench advice"
+  icon_small: "./assets/schierami-icon.svg"
+  icon_large: "./assets/schierami-icon.svg"
