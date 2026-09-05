@@ -1,42 +1,34 @@
-# League profile handling
+# Scoped league profile
 
-Never assume the user's league settings or roster.
+## Identity and provenance
 
-## Supported inputs
+Separate real competition(s)/season, fantasy league, fantasy competition, team, game system and host platform. A cup can have different rules from its league. Keep roster timestamp and fantasy-to-real-matchday mapping. Resolve team/name collisions, transfers and role changes against the relevant competition's list.
 
-Obtain league context from material the user has explicitly supplied in the conversation:
+Store each rule as a fact with value, status, source/locator and optional as-of and valid-until dates. Use the [profile schema](../schemas/league-profile.schema.json) and [synthetic example](../examples/league-profile.json) as internal structures, not a questionnaire to hand to the user. A cell/range or quoted settings label is a better locator than "Excel". Separate observed evidence from inferred values.
 
-1. screenshot or image of the roster;
-2. pasted player list or table;
-3. exported file;
-4. screenshot or pasted text of league settings;
-5. roster and rules already established in the conversation;
-6. direct user statements.
+Statuses: confirmed, user_stated, hypothesis, unknown, conflicted, not_applicable. Unknown/conflicted/not_applicable values are null, never false or zero. Keep both conflicting alternatives and their sources. A hypothesis cannot become confirmed through repetition by the assistant. Check hypotheses that could flip the choice.
 
-A Leghe Fantacalcio URL can identify which league the user means, but the current skills-only version must not depend on automatically crawling or scraping the platform. See `public-league-pages.md`.
+## Decision-relevant inventory
 
-## Minimal rule checklist
+- Roster, eligible roles, modules/slots, starter and bench counts, captain/vice.
+- Vote source; event bonus/malus, role-dependent scoring, clean sheets and saves.
+- Each modifier's activation, inputs, thresholds, rounding, target and timing.
+- No-vote exceptions, maximum substitutions, priority/order, module changes, adaptation penalties, office reserves, Switch and whether they consume changes.
+- Contest objective, points for win/draw/loss, goal bands, gap/tie rules, opponent data needed by scoring, home factors, ties and knockout qualification.
+- Global or rolling deadline, time zone, locks, postponements and double gameweeks.
 
-Collect only settings that can change the recommendation. In priority order:
+Names such as Classic, Mantra or "defense modifier" are pointers, not formulas. At first intake ask briefly whether there are custom scoring or substitution rules. Then collect only details that can affect the request. Do not require auction budget or transfer rules for a lineup decision unless they constrain eligibility.
 
-1. **Allowed formations** - needed to compare legal modules.
-2. **Defensive modifier** - enabled/disabled and exact formula or table.
-3. **Substitutions** - maximum number, Traditional/Dynamic/Hybrid behavior, and any role constraints.
-4. **Bench and Switch behavior** - only when they change no-vote insurance or module flexibility.
-5. **Vote source and scoring peculiarities** - only when they materially change player value.
-6. **Head-to-head goal thresholds/bands** - only when the user wants opponent-aware risk optimization rather than pure expected points.
-7. **Lineup deadline** - needed for freshness and late-news handling.
+## Reuse, updates and conflicts
 
-Other settings should be ignored unless they can change the XI.
+Read accessible files before asking for their contents. Inspect all relevant sheets, not only an indexed snippet; do not treat an inaccessible attachment as nonexistent. Preserve source and extraction uncertainty for visual/ambiguous cells. If a file is unreadable, request only the missing part in a usable form.
 
-## Confidence handling
+Reuse the profile only within its scope and accessible storage. Refresh after announced rule/roster changes or season/competition changes. A newer message explicitly correcting a rule can supersede the old fact; retain the reason. Otherwise ask about material conflicts rather than selecting the convenient value. Sports news freshness is separate from the usually slower-changing rules.
 
-Classify league inputs internally as:
+Do not promise cross-chat persistence or write private profiles to a public repo.
 
-- **confirmed** - explicitly visible in user-provided material;
-- **stated** - explicitly told by the user;
-- **unknown** - not available.
+## Completeness is decision-specific
 
-Never infer exact rules from platform defaults, previous lineups, observed scores, or another league.
+Tag a gap as blocking legality, potentially flipping the decision, or irrelevant to this request. Resolve the first two using clarification-policy.md. Explain the assumed objective when opponent forecasts are unavailable. If an opponent-dependent modifier exists, opponent data may be needed even to calculate one's own score.
 
-If a missing rule cannot change the recommended XI, proceed. If it can flip module, modifier value or substitution coverage, ask for one focused screenshot or one direct answer rather than requesting the whole regulation.
+The executable scenario contract is a separate projection of confirmed rules; schema-valid profile data alone does not prove those rules are complete or true.

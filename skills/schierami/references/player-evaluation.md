@@ -1,39 +1,11 @@
-# Player evaluation framework
+# Player comparison
 
-Use only dimensions that can change the current lineup decision.
+Compare expected contribution under the actual scoring, not reputation or a universal ordering of features. Verify availability before estimating production, but combine the two: minutes alone are not the objective.
 
-## This matchday
+For each consequential candidate consider starting/entering/no-vote scenarios, minutes conditional on each, actual role, set pieces, match context and repeatable opportunity. Respect the provider's valid-vote rules. Include the chance that a short appearance blocks a better substitute. Keep information confidence separate from the margin of preference. Use clear/moderate/marginal, not unexplained odds.
 
-1. **Vote probability / expected minutes** — a likely 75-90 minute starter usually beats a marginally higher-upside rotation risk.
-2. **Real tactical role** — value advanced positioning, box presence, width/half-space usage and responsibilities more than nominal fantasy position.
-3. **Set pieces** — current penalty duty, direct free kicks and corners can materially increase upside when minutes are secure.
-4. **Matchup and game script** — opponent strength, home/away, expected possession, transitions and likely tactical shape.
-5. **Recent underlying involvement** — minutes, shots, shots in box, xG, chances created/xA and dangerous touches where available.
-6. **Fantasy floor/ceiling** — distinguish reliable vote/production from volatile bonus hunting.
-7. **News volatility** — late fitness tests, tactical experiments and rotation lower confidence.
-8. **Schedule congestion** — European/cup commitments matter only when supported by the coach's actual rotation pattern.
-9. **Whole-lineup effects** — substitutions, bench coverage, modifier rules and correlated risk can change the optimal choice.
+Use recent matches strongly for demonstrated role changes, cautiously for finishing streaks. Compare shots, non-penalty xG, chance creation/xA and dangerous involvement within compatible sources and time windows. Per-90 production needs sample size and expected minutes. Never invent statistics to make the answer look scientific.
 
-## Defenders and modifier
+Goalkeepers: weigh scoring for concessions, clean sheets, saves and relevant vote modifiers; home status alone is insufficient. Defenders: compare attacking role with the exact unit-level modifier, not a generic "safe vote" rule. Midfielders: value advanced actions and set pieces only in proportion to their scoring value. Forwards: examine role, opportunity and minutes rather than a scoring drought alone.
 
-When a defensive modifier exists, evaluate the unit rather than four isolated defenders:
-
-- goalkeeper matchup where relevant to the formula;
-- probability of a clean or low-concession match;
-- individual vote reliability;
-- likelihood of cards, errors or rotation;
-- aerial/set-piece threat;
-- wing-back attacking role;
-- bench coverage for uncertain starters.
-
-Do not sacrifice a strong structural modifier edge for a tiny attacking-upside difference unless the league rules justify it.
-
-## Confidence split
-
-When comparing two options, a rough split is useful:
-
-- `70/30+`: clear preference;
-- `60/40` to `65/35`: real edge but plausible alternative;
-- `55/45`: essentially a toss-up; explain the tie-breaker.
-
-Do not use a numeric split when source uncertainty is too high to justify it. State what late news would flip the call.
+A favorite club can still offer a poor individual role. Congestion is a reason to check player-specific rotation and fitness, not an automatic deduction. Multiple players in the same match/team introduce correlated outcomes; do not assert that independence holds when thresholds, captaincy or head-to-head risk make it matter.

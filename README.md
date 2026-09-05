@@ -1,70 +1,42 @@
 # Schierami
 
-**Schierami** e un assistente indipendente per il fantasy football italiano sulla Serie A, specializzato nella scelta della formazione giornata per giornata.
+**Schierami** e un assistente indipendente ed evidence-informed per le decisioni di formazione nel fantasy football.
 
-> **Il tuo assistente scientifico per il fantasy football italiano.**
+> **Regole reali, fonti attuali, decisioni sotto incertezza.**
 
-La prima versione e un plugin **skills-only** per ChatGPT e Codex. Parte dalla rosa e dalle regole che l'utente fornisce nel contesto, per esempio tramite:
+La skill non assume che ogni lega sia Serie A, Leghe Fantacalcio o Classic. Separa il campionato reale, la competizione fantasy, il sistema di gioco e la piattaforma; accetta rose e regolamenti da screenshot, file, export, testo, URL utilizzabili o contesto gia disponibile.
 
-- screenshot o immagine;
-- lista o tabella;
-- file o export;
-- screenshot o testo delle regole della lega;
-- informazioni gia presenti nella conversazione.
+## Cosa cambia nella 0.2
 
-Un URL di Leghe Fantacalcio puo identificare la lega, ma questa versione non dipende dal crawling o scraping automatico della piattaforma.
-
-Schierami controlla probabili formazioni, infortuni, ballottaggi, ruolo tattico reale, piazzati, minutaggio atteso, matchup, congestione del calendario, rotazioni, statistiche sottostanti, modificatori e copertura della panchina.
-
-L'obiettivo e uno solo: **scegliere il miglior XI possibile per quella giornata, con modulo e panchina coerenti con le regole della lega**.
+- supporto esplicito a **Classic, Mantra e regolamenti personalizzati**;
+- profilo di lega con provenienza e stati `confirmed`, `user_stated`, `hypothesis`, `unknown`, `conflicted` e `not_applicable`;
+- politica di chiarimento: cerca prima nei dati accessibili e chiede all'utente solo cio che puo cambiare la scelta;
+- separazione tra ricerca sportiva, interpretazione delle regole e calcolo deterministico;
+- gerarchia delle fonti per tipo di informazione, non una lista di siti obbligatori;
+- gestione esplicita di soglie non lineari, sostituzioni, modificatori, panchina e obiettivi head-to-head;
+- script opzionali per validare una formazione e calcolare scenari supportati, con errori espliciti sulle regole non implementate;
+- test di regressione per evitare duplicati, formazioni illegali e calcoli silenziosamente incompleti.
 
 ## Metodo
 
-Schierami usa un processo decision-first:
+Schierami segue un flusso decision-first:
 
-1. ricostruisce rosa, ruoli e regole che possono cambiare la scelta;
-2. costruisce una formazione provvisoria e identifica i pochi **swing decisions** davvero decisivi;
-3. ricerca solo le informazioni che possono cambiare quelle scelte;
-4. valuta prima disponibilita, voto probabile e minutaggio atteso;
-5. passa poi a ruolo tattico, piazzati, matchup e indicatori sottostanti;
-6. confronta i moduli come sistemi completi, includendo modificatori e copertura della panchina;
-7. espone l'incertezza e indica quale notizia dell'ultima ora potrebbe ribaltare un ballottaggio.
+1. recupera rosa, competizione e regole gia disponibili;
+2. distingue fatti confermati, ipotesi, conflitti e dati mancanti;
+3. chiede una regola privata solo se valori plausibili possono cambiare legalita o raccomandazione;
+4. costruisce una formazione provvisoria e identifica pochi **swing decisions**;
+5. ricerca solo i fatti pubblici che possono ribaltare quelle scelte;
+6. combina disponibilita, minutaggio, ruolo tattico, piazzati, matchup e indicatori sottostanti;
+7. confronta intere formazioni legali, includendo sostituzioni e bonus strutturali secondo l'ordine reale delle regole;
+8. espone assunzioni, limiti e la notizia o regola che potrebbe cambiare il consiglio.
 
-La procedura operativa e documentata in `skills/schierami/references/research-protocol.md` e `expert-playbook.md`.
+Una regola chiamata "modificatore difesa" o un'etichetta come "Mantra" non viene trattata come formula completa: se la configurazione esatta conta, Schierami la verifica o la chiede.
 
-## Principi evidence-based
+## Evidence-informed, non infallibile
 
-Le regole decisionali di Schierami sono state confrontate con letteratura accademica su fantasy football e football analytics.
+La letteratura accademica viene usata per definire priorita e ridurre bias: ottimizzazione vincolata della formazione, valore del minutaggio, regressione della forma recente, uso prudente di xG/xA, differenze tra rating, fixture congestion e decisioni sotto osservabilita parziale. La mappa evidenza -> regola operativa e in `skills/schierami/references/scientific-evidence.md`.
 
-In particolare:
-
-- la performance dei manager fantasy mostra una componente di abilita persistente nel tempo, pur con forte rumore e fortuna; questo supporta l'idea di ottimizzare un processo ripetibile invece di inseguire il risultato di una singola giornata;
-- la selezione della squadra e stata formalizzata in letteratura come problema di ottimizzazione vincolata, quindi Schierami confronta il valore della formazione completa e non undici giocatori isolati;
-- disponibilita, probabilita di voto e minutaggio atteso vengono trattati come input di primo livello prima dell'upside per 90 minuti;
-- forma recente e bonus dell'ultima giornata vengono regressi verso segnali piu stabili quando non sono accompagnati da ruolo, minuti e opportunita ripetibili;
-- xG/xA e statistiche sottostanti sono usati come indicatori di processo, non come oracoli;
-- congestione del calendario ed Europa aumentano soprattutto incertezza di rotazione e rischio, non generano automaticamente una penalizzazione fissa per tutti;
-- il modificatore difesa viene valutato come proprieta del sistema portiere-difensori e della formula specifica della lega;
-- fonti indipendenti e recenti sono preferite a molte copie dello stesso report.
-
-La mappa completa evidenza -> regola operativa e in `skills/schierami/references/scientific-evidence.md`.
-
-## Riferimenti principali
-
-- O'Brien, Gleeson & O'Sullivan (2021), *Identification of skill in an online game: The case of Fantasy Premier League*. PLOS ONE. https://doi.org/10.1371/journal.pone.0246698
-- Bonomo, Duran & Marenco (2014), *Mathematical programming as a tool for virtual soccer coaches: a case study of a fantasy sport game*. https://doi.org/10.1111/itor.12068
-- Maniezzo & Aspee Encina (2022), *Predictive Analytics for Real-time Auction Bidding Support: a Case on Fantasy Football*. https://doi.org/10.1007/s43069-022-00160-w
-- Bhatt et al. (2019), *Who Should Be the Captain This Week? Leveraging Inferred Diversity-Enhanced Crowd Wisdom for a Fantasy Premier League Captain Prediction*. https://doi.org/10.1609/icwsm.v13i01.3213
-- Pappalardo et al. (2019), *PlayeRank: Data-driven Performance Evaluation and Player Ranking in Soccer via a Machine Learning Approach*. https://doi.org/10.1145/3343172
-- Julian, Page & Harper (2021), *The Effect of Fixture Congestion on Performance During Professional Male Soccer Match-Play: A Systematic Critical Review with Meta-Analysis*. https://doi.org/10.1007/s40279-020-01359-9
-- Page et al. (2023), *The Effects of Fixture Congestion on Injury in Professional Male Soccer: A Systematic Review*. https://doi.org/10.1007/s40279-022-01799-5
-- Scholtes & Karakus (2024), *Bayes-xG: player and position correction on expected goals using Bayesian hierarchical approach*. https://doi.org/10.3389/fspor.2024.1348983
-
-## Privacy, termini e supporto
-
-- Privacy: `docs/privacy.md`
-- Termini: `docs/terms.md`
-- Supporto: `docs/support.md`
+Gli articoli non dimostrano chi segnera nella prossima giornata. Le informazioni correnti vengono cercate nelle fonti appropriate alla domanda e alla competizione; una fonte e considerata usata solo se e stata realmente consultata per un fatto decisivo.
 
 ## Struttura
 
@@ -74,21 +46,36 @@ skills/schierami/
   SKILL.md
   agents/openai.yaml
   references/
-brand/
+  schemas/
+  examples/
+  scripts/
+  tests/
 docs/
+brand/
 LICENSE
 ```
 
-## Filosofia
+I calcolatori in `scripts/` sono volutamente limitati: validano input espliciti e scenari supportati, ma non simulano ogni piattaforma e non inventano probabilita. Una regola non supportata deve restare visibile e viene gestita manualmente o con un motore verificato, mai ignorata.
 
-Schierami non usa classifiche generiche o il nome del giocatore come scorciatoia. Le decisioni privilegiano minuti attesi, ruolo reale, contesto tattico, fonti aggiornate e valore atteso complessivo della formazione.
+## Riferimenti scientifici principali
 
-Non promette di prevedere il calcio: cerca di prendere **decisioni migliori sotto incertezza** in modo ripetibile.
+- O'Brien, Gleeson & O'Sullivan (2021), *Identification of skill in an online game: The case of Fantasy Premier League*. https://doi.org/10.1371/journal.pone.0246698
+- Bonomo, Duran & Marenco (2014), *Mathematical programming as a tool for virtual soccer coaches*. https://doi.org/10.1111/itor.12068
+- Bhatt et al. (2019), *Who Should Be the Captain This Week?* https://doi.org/10.1609/icwsm.v13i01.3213
+- Pappalardo et al. (2019), *PlayeRank*. https://doi.org/10.1145/3343172
+- Julian, Page & Harper (2021), fixture congestion meta-analysis. https://doi.org/10.1007/s40279-020-01359-9
+- Scholtes & Karakus (2024), *Bayes-xG*. https://doi.org/10.3389/fspor.2024.1348983
 
-## Indipendenza
+## Privacy, termini e indipendenza
 
-Schierami non e affiliato, sponsorizzato o approvato da Fantacalcio S.r.l., Lega Serie A, OpenAI, Sky, FotMob o dagli altri fornitori di dati citati nelle istruzioni della Skill. I nomi di terze parti sono usati solo per identificare piattaforme, competizioni o fonti informative.
+Schierami non deve pubblicare rose o regolamenti privati nel repository. Usa soltanto modalita di accesso disponibili e autorizzate; non richiede password o token di sessione in chat.
+
+- Privacy: `docs/privacy.md`
+- Termini: `docs/terms.md`
+- Supporto: `docs/support.md`
+
+Schierami non e affiliato, sponsorizzato o approvato da Fantacalcio S.r.l., Lega Serie A, OpenAI o dai fornitori citati. I nomi di terze parti identificano soltanto piattaforme, competizioni o fonti informative.
 
 ## Licenza
 
-Il progetto e distribuito sotto **MIT License**. Vedi `LICENSE`.
+MIT License. Vedi `LICENSE`.

@@ -1,28 +1,16 @@
 {
   "name": "schierami",
-  "version": "0.1.0",
-  "description": "Evidence-based Italian Serie A fantasy-football lineup assistant for choosing the best XI, formation and bench using fresh team news, tactical context and league rules.",
+  "version": "0.2.0",
+  "description": "Evidence-informed fantasy-soccer lineup assistant for Classic, Mantra and custom leagues, with rule-aware clarification, current research and deterministic checks.",
   "repository": "https://github.com/gcerretani/schierami",
-  "keywords": [
-    "serie-a",
-    "fantasy-football",
-    "fantallenatore",
-    "formazione",
-    "lineup",
-    "probabili-formazioni",
-    "modificatore-difesa"
-  ],
+  "keywords": ["fantasy-football","fantacalcio","classic","mantra","formazione","lineup","probabili-formazioni","modificatori"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Schierami",
     "shortDescription": "Il tuo esperto per scegliere formazione e panchina",
-    "longDescription": "Schierami e un assistente indipendente per il fantasy football italiano sulla Serie A. Analizza titolarita, minutaggio atteso, ruolo tattico, piazzati, matchup, statistiche sottostanti, rotazioni, modificatori e regole della lega per consigliare modulo, XI e panchina con un metodo evidence-based.",
+    "longDescription": "Schierami ricostruisce rosa e regole reali della competizione, chiede solo le informazioni mancanti che possono cambiare la decisione, verifica news e dati attuali quando disponibili e confronta intere formazioni legali. Supporta Classic, Mantra e regolamenti personalizzati senza dipendere da una singola piattaforma o da impostazioni presunte.",
     "category": "Sports",
     "capabilities": ["Read"],
-    "defaultPrompt": [
-      "Questa e la mia rosa: che formazione metto questa giornata?",
-      "Chi schiero tra questi due giocatori?",
-      "Controlla titolarita e rischi dell'ultima ora della mia rosa."
-    ]
+    "defaultPrompt": ["Questa e la mia rosa: che formazione metto questa giornata?","Chi schiero tra questi due giocatori con le regole della mia lega?","Controlla titolarita, regole decisive e rischi dell'ultima ora della mia rosa."]
   }
 }

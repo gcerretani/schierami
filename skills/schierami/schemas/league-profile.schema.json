@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schierami scoped league profile",
+  "type": "object",
+  "required": ["profile_version", "scope", "facts"],
+  "properties": {
+    "profile_version": {"const": 1},
+    "scope": {"type":"object", "additionalProperties": {"type":["string","number","boolean","null"]}},
+    "facts": {
+      "type":"object",
+      "additionalProperties": {
+        "type":"object",
+        "required":["value","status"],
+        "properties": {
+          "value": {},
+          "status": {"enum":["confirmed","user_stated","hypothesis","unknown","conflicted","not_applicable"]},
+          "source": {"type":["string","null"]},
+          "as_of": {"type":["string","null"]},
+          "valid_until": {"type":["string","null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

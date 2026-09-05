@@ -1,0 +1,9 @@
+{
+  "profile_version": 1,
+  "scope": {"fantasy_league": "Example League", "fantasy_competition": "League", "team": "Example FC", "season": "2026-27"},
+  "facts": {
+    "game_system": {"value": "classic", "status": "confirmed", "source": "rules.pdf#p2"},
+    "defensive_modifier_enabled": {"value": true, "status": "user_stated", "source": "conversation"},
+    "defensive_modifier_formula": {"value": null, "status": "unknown", "source": null}
+  }
+}
