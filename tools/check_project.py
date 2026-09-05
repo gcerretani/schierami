@@ -86,7 +86,7 @@ def check(root: Path = ROOT) -> dict:
     root = root.resolve()
     data = load_manifest(root)
     required = [
-        "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE",
+        "README.md", "AGENTS.md", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE",
         ".codex-plugin/plugin.json", ".github/workflows/test.yml",
         "docs/README.md", "docs/installation.md", "docs/development.md",
         "docs/releases.md", "docs/submission.md", "docs/privacy.md",
