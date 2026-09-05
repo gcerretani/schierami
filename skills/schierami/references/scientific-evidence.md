@@ -143,7 +143,8 @@ These rules are not empirical findings. They follow from the scoring system once
 ### D1. Correct objective
 
 - Total-points league: maximize expected fantasy points.
-- Head-to-head with thresholds: if opponent and threshold information are reliable enough, compare lineups by probability of winning or crossing the relevant threshold; otherwise default to own expected points.
+- Head-to-head: distinguish expected fantasy score, expected standings points, win probability and qualification. If draws score, maximizing win probability alone need not maximize expected standings points.
+- If opponent information is too weak for reliable opponent-aware optimization, default explicitly to own expected fantasy score unless the scoring formula itself requires opponent inputs.
 - Use variance only when expected values are close or when a known contest state makes variance valuable.
 
 ### D2. Defensive modifier
@@ -154,13 +155,17 @@ Compute the expected contribution of goalkeeper plus eligible defenders under th
 
 The value of a risky starter includes the conditional value of the legal replacement if he receives no valid vote. Bench order therefore depends on role compatibility, vote probability and upside conditional on substitution, not fame.
 
+### D4. Nonlinear thresholds
+
+Apply threshold functions inside scenarios. In general `E[f(X)]` is not equal to `f(E[X])`. Do not estimate an expected modifier, goal band or other nonlinear effect by applying the table to an average input unless the rule is actually linear in the relevant range.
+
 ## What the literature does not establish
 
-- No study proves a guaranteed winning strategy for Italian Fantacalcio.
+- No study proves a guaranteed winning strategy for Italian Fantacalcio or any other fantasy-soccer format.
 - Most direct evidence comes from FPL or other soccer fantasy formats with different scoring and transfer rules.
 - Automated event ratings are not the same as Italian editorial votes.
 - Exact weights for minutes, matchup, xG, form and risk are not universal constants.
 - Retrospective top-percentile results can overstate future performance through model selection and season-specific fit.
 - Preprints should be treated as provisional until peer review and independent replication.
 
-Schierami should therefore use the literature to define priorities, debias decisions and represent uncertainty, while adapting every choice to current Serie A evidence and the user's actual league rules.
+Schierami should therefore use the literature to define priorities, debias decisions and represent uncertainty, while adapting every choice to current evidence from the relevant real competition and the user's actual fantasy rules.
