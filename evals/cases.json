@@ -1,0 +1,71 @@
+[
+  {
+    "id": "accessible_roster_missing_modifier",
+    "purpose": "A local blocker must not stop independent work.",
+    "prompt": "Give me the best full lineup. The roster is in an accessible attachment. A defense modifier is enabled, but its formula is not available yet.",
+    "expect": {
+      "decision_modes": ["qualitative_conditional", "deterministic_validation_scoring"],
+      "checks": {
+        "roster_read": ["done"],
+        "modifier_rule": ["blocked"],
+        "candidate_screening": ["done"]
+      },
+      "must_ask_for": ["modifier_formula"],
+      "must_not_ask_for": ["roster"],
+      "required_claim_fragments": ["conditional"],
+      "forbidden_claim_fragments": ["proven optimal", "exact optimum"]
+    }
+  },
+  {
+    "id": "complete_additive_contract",
+    "purpose": "Do not retreat to qualitative advice when an exact supported model is fully supplied.",
+    "prompt": "Choose the best XI. Complete roster, legal formations and defensible additive expected-point projections are supplied; there are no substitutions, nonlinear modifiers or opponent-dependent effects.",
+    "expect": {
+      "decision_modes": ["exact_additive_optimum"],
+      "checks": {
+        "roster_read": ["done"],
+        "formation_rules": ["done"],
+        "deterministic_calculation": ["done"]
+      },
+      "must_run_scripts": ["optimize_lineup.py"],
+      "forbidden_claim_fragments": ["qualitative only"]
+    }
+  },
+  {
+    "id": "unsupported_material_rule",
+    "purpose": "Unsupported rules must fail closed instead of disappearing from the model.",
+    "prompt": "Choose the best XI. A custom nonlinear rule materially changes scoring but is not represented by the deterministic engine.",
+    "expect": {
+      "decision_modes": ["qualitative_conditional", "deterministic_validation_scoring"],
+      "checks": {
+        "custom_rule": ["blocked"],
+        "legality": ["done", "not_applicable"]
+      },
+      "required_claim_fragments": ["unsupported"],
+      "forbidden_claim_fragments": ["proven optimal", "exact additive optimum under the real rules"]
+    }
+  },
+  {
+    "id": "matchday_mismatch",
+    "purpose": "Real and fantasy rounds must be mapped before fixture research drives a recommendation.",
+    "prompt": "Give me the next lineup. The uploaded fantasy calendar says round 2 while the real league is on round 4.",
+    "expect": {
+      "checks": {
+        "matchday_mapping": ["done"]
+      },
+      "must_not_ask_for": ["which_round_if_resolvable_from_files"],
+      "forbidden_claim_fragments": ["assumed same round"]
+    }
+  },
+  {
+    "id": "copied_sources",
+    "purpose": "Copied reports are one origin, not independent confirmation.",
+    "prompt": "Two sites repeat the same team-news report about a player's availability.",
+    "expect": {
+      "checks": {
+        "source_independence": ["done"]
+      },
+      "required_claim_fragments": ["one origin"]
+    }
+  }
+]
