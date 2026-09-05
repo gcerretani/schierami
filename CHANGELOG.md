@@ -10,6 +10,28 @@ source-history dates, not retrospective publication claims.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-09-05
+
+### Added
+
+- A single `run_lineup.py` deterministic dispatcher that selects the strongest supported calculation mode from supplied inputs and emits an observable execution report.
+- A run-report schema and workflow-traceability guidance for recording completed checks, local blockers, executed contracts and optimality scope without storing hidden reasoning.
+- Executable behavioral evaluation cases plus an offline scorer for roster reuse, local blockers, mode selection, matchday mapping, unsupported rules and source independence.
+- Integration regressions that compare the additive optimizer with an exhaustive oracle and verify legality before scenario ranking.
+- A root `AGENTS.md` with concise repository objectives, invariants, development workflow and release guidance for coding agents.
+
+### Changed
+
+- Full-lineup recommendations now use an explicit completion gate: a missing fact blocks only decisions that depend on it, while independent checks must still be completed.
+- The scenario evaluator requires explicit lineup rules and validates every candidate before scoring, including formation, starter count, bench limits, locks and exclusions.
+- Scoring and lineup slot-eligibility contracts must agree, and unsupported captain scoring fails closed instead of being silently ignored.
+- Repository documentation now reflects the deterministic dispatcher, executable behavioral evaluations and the separation between runtime skill files and maintainer tooling.
+
+### Fixed
+
+- Illegal candidate lineups can no longer outrank legal lineups merely because the scorer received extra starters or an invalid formation.
+- Captain optimization and branch-and-bound upper bounds are correct for every supported positive captain multiplier, including multipliers below `1`.
+
 ## [0.3.0] - 2026-09-05
 
 ### Added
@@ -77,7 +99,8 @@ Source snapshot: `daf42244c89f89b10891921eca55f1593f543ed0`.
 
 Source snapshot: `fdbdcd26370cc50dde367c04baf0b8ffe4597a04`.
 
-[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/gcerretani/schierami/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/gcerretani/schierami/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/gcerretani/schierami/releases/tag/v0.2.1
 [0.2.0]: https://github.com/gcerretani/schierami/compare/fdbdcd26370cc50dde367c04baf0b8ffe4597a04...daf42244c89f89b10891921eca55f1593f543ed0

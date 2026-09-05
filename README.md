@@ -39,6 +39,8 @@ not invented certainty.
   using current sources appropriate to the competition and the question.
 - Separates confirmed facts, assumptions, unresolved rules and sporting forecasts;
   explains the information that would reverse a close recommendation.
+- Uses deterministic validation, additive optimization and scenario evaluation
+  only when the supplied rules and quantitative inputs support those claims.
 
 The method is informed by research on fantasy sports and football analytics.
 See the [evidence-to-rule map](skills/schierami/references/scientific-evidence.md)
@@ -52,10 +54,17 @@ Research, file access and optional Python execution depend on the host's tools
 and permissions. It does not request passwords or session tokens.
 
 Classic, Mantra and custom-rule **guidance** does not mean a complete executable
-scoring engine for every platform. The two bundled calculators check explicit
-lineup constraints and a limited scenario contract. They do not forecast players
-or implement the full Mantra substitution algorithm. See the
-[calculator contract](skills/schierami/references/scoring-model.md).
+scoring engine for every platform. The bundled deterministic engine includes
+lineup validation, additive XI optimization, explicit scenario scoring, whole-lineup
+scenario comparison and a dispatcher that records the executed contract. It does
+not forecast players, implement every platform's substitution logic or turn an
+unsupported real rule into an assumed default. See the
+[deterministic engine contract](skills/schierami/references/scoring-model.md).
+
+For full-lineup calculations, `skills/schierami/scripts/run_lineup.py` is the
+preferred deterministic entry point. It emits an observable run report containing
+checks, blockers and execution scope; this is operational traceability, not hidden
+chain-of-thought.
 
 ## Project map
 
@@ -63,13 +72,15 @@ or implement the full Mantra substitution algorithm. See the
 | --- | --- |
 | [skills/schierami](skills/schierami) | Installable workflow, references, examples, schemas, scripts and icon. |
 | [.codex-plugin/plugin.json](.codex-plugin/plugin.json) | Plugin identity, listing metadata and canonical version. |
+| [AGENTS.md](AGENTS.md) | Concise repository operating guide for coding agents. |
 | [docs](docs/README.md) | Installation, development, release and submission guides. |
+| [evals](evals/README.md) | Synthetic executable behavioral process evaluations. |
 | [tools](tools) and [tests](tests) | Maintainer tooling and automated checks; excluded from installable bundles. |
 | [CHANGELOG.md](CHANGELOG.md) | Version history and the source of GitHub release notes. |
 
-For development, start with [CONTRIBUTING.md](CONTRIBUTING.md).
-For help, see [support](docs/support.md), [privacy](docs/privacy.md) and
-[terms of use](docs/terms.md).
+For development, start with [CONTRIBUTING.md](CONTRIBUTING.md); coding agents should
+also read [AGENTS.md](AGENTS.md). For help, see [support](docs/support.md),
+[privacy](docs/privacy.md) and [terms of use](docs/terms.md).
 
 ## License and independence
 

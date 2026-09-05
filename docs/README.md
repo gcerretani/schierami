@@ -9,10 +9,11 @@
 ## Developing and distributing
 
 - [Contributing](../CONTRIBUTING.md): language, change and testing conventions.
+- [Agent guide](../AGENTS.md): concise objectives and invariants for coding agents.
 - [Development](development.md): repository layout and local commands.
 - [Releases](releases.md): versions, changelog, packages and GitHub publication.
 - [Directory submission](submission.md): third-party distribution checklist.
-- [Evaluation scenarios](../evals/README.md): manual behavior checks, not test results.
+- [Behavioral evaluations](../evals/README.md): synthetic machine-scoreable process checks, not prediction claims.
 - [Changelog](../CHANGELOG.md): historical changes and release notes.
 
 ## How the skill works
@@ -22,5 +23,7 @@ Start with the [league profile](../skills/schierami/references/league-profile.md
 [clarification policy](../skills/schierami/references/clarification-policy.md),
 [research protocol](../skills/schierami/references/research-protocol.md) and
 [scientific evidence](../skills/schierami/references/scientific-evidence.md).
-The [calculator contract](../skills/schierami/references/scoring-model.md) describes
-what the optional Python scripts actually support.
+The [deterministic engine contract](../skills/schierami/references/scoring-model.md)
+describes what the optional runtime Python scripts actually support, while
+[workflow traceability](../skills/schierami/references/workflow-traceability.md)
+describes completion gates and observable execution records.
