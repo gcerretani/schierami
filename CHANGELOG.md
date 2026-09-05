@@ -10,6 +10,32 @@ source-history dates, not retrospective publication claims.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-05
+
+### Added
+
+- Skill-only empirical player/role shrinkage forecasting with explicit parameters,
+  support counts, cold-start diagnostics and declared-timestamp cutoff checks.
+- Versioned, strict forecast bundles with source origins, expiry/conflict checks,
+  input hashes and coupled minutes, vote and fantasy-point outcomes.
+- Exact finite-state and seeded Monte Carlo joint-block evaluation through the
+  existing legal-candidate engine and dispatcher, including paired sampling noise.
+- Walk-forward comparison of predeclared baselines, Brier/log loss, reliability
+  bins, MAE/RMSE/CRPS, conditional base-vote coverage and paired fold bootstrap.
+- Optional decision replay separating pre-deadline candidate selection from realized
+  scores and hindsight regret. Explicit unsupported-rule and sample-only limits.
+- Synthetic end-to-end examples, leakage/identity/probability regression tests,
+  standalone-package execution tests and a documented real-data validation protocol.
+- CI retention of tested source and reproducible review packages.
+
+### Scientific scope
+
+- These are forecasting baselines and evaluation tools, not trained, calibrated or
+  empirically superior football models. No real-data accuracy gain is claimed.
+- No backend, automatic scraper, private dataset, API key or additional runtime
+  dependency is introduced. Full Mantra, scenario captaincy, global bench search,
+  learned match-event correlations and opponent-aware utility remain outside scope.
+
 ## [0.3.1] - 2026-09-05
 
 ### Added
@@ -99,7 +125,8 @@ Source snapshot: `daf42244c89f89b10891921eca55f1593f543ed0`.
 
 Source snapshot: `fdbdcd26370cc50dde367c04baf0b8ffe4597a04`.
 
-[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/gcerretani/schierami/releases/tag/v0.4.0
 [0.3.1]: https://github.com/gcerretani/schierami/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/gcerretani/schierami/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/gcerretani/schierami/releases/tag/v0.2.1

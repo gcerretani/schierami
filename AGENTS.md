@@ -80,3 +80,13 @@ version without rewriting an existing published release.
 
 Do not hand-edit generated archives or commit `dist/`. See
 [docs/releases.md](docs/releases.md) for the full release process.
+
+## Forecasting changes
+
+Read the [forecasting contract](skills/schierami/references/forecasting.md) and
+[validation guide](docs/forecast-validation.md) before changing forecast logic.
+Keep observations, inference, joint-scenario sampling and realized evaluation
+separate. Preserve timestamp exclusion, actual evidence-origin/support reporting,
+seeded reproducibility and finite-model optimality limits. Add metamorphic tests
+showing that future outcomes cannot change earlier predictions. Never turn
+synthetic test gains or calibration diagnostics into a real-world accuracy claim.

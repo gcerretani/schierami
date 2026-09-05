@@ -42,3 +42,12 @@ A runner should emit a JSON array whose objects contain:
 - Judge evidence only as available before the lineup deadline. Separate process quality from realized fantasy points.
 
 For version comparisons, hold model, inputs, available tools and research budget constant. Repeat important cases because one successful sample does not establish consistency. Track rule errors, extraction errors, unnecessary questions, unsupported claims, mode selection, tool usage and latency separately.
+
+## Forecast evaluation is a separate layer
+
+`backtest_forecasts.py` evaluates predeclared probabilistic baselines with chronological
+cutoffs and optional realized candidate scores. Follow the
+[validation protocol](../docs/forecast-validation.md). Behavioral cases now also
+check future-data exclusion, source conflicts and sample-only optimality claims.
+The unit tests exercise the contracts with synthetic data; real host-agent trials
+and real-data prospective accuracy experiments remain separate, unreported work.

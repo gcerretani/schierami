@@ -47,6 +47,20 @@ See the [evidence-to-rule map](skills/schierami/references/scientific-evidence.m
 for papers, transfer limits and mathematical deductions. These references do not
 prove that this skill has better predictive performance than alternatives.
 
+## Forecasting and evaluation
+
+The skill includes a standard-library-only empirical forecasting baseline, a
+strict forecast-bundle contract, exact or seeded joint-block scenario evaluation,
+and a chronological benchmark with probability and distribution metrics.
+Current-news research remains a host responsibility; the Python modules process
+supplied data and do not scrape providers or install packages.
+
+Read the [forecasting contract](skills/schierami/references/forecasting.md) and
+[scientific validation guide](docs/forecast-validation.md). A correct calculation,
+a synthetic benchmark or an unvalidated baseline is **not evidence of improved
+football predictions**. The baseline does not learn opponent adjustments, goals,
+assists or match-level correlations, and no real-data superiority is claimed.
+
 ## Scope and limits
 
 Schierami has no hosted backend, account service or automatic lineup submission.
@@ -56,9 +70,10 @@ and permissions. It does not request passwords or session tokens.
 Classic, Mantra and custom-rule **guidance** does not mean a complete executable
 scoring engine for every platform. The bundled deterministic engine includes
 lineup validation, additive XI optimization, explicit scenario scoring, whole-lineup
-scenario comparison and a dispatcher that records the executed contract. It does
-not forecast players, implement every platform's substitution logic or turn an
-unsupported real rule into an assumed default. See the
+scenario comparison and a dispatcher that records the executed contract. Rule
+calculation stays separate from the empirical forecast baseline. Neither layer
+implements every platform's substitution logic or turns an unsupported real rule
+into an assumed default. See the
 [deterministic engine contract](skills/schierami/references/scoring-model.md).
 
 For full-lineup calculations, `skills/schierami/scripts/run_lineup.py` is the
