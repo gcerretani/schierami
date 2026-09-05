@@ -64,7 +64,7 @@ def optimize(data):
                 v=next((proj[p] for p in cand[s] if p not in used),None)
                 if v is None:return None
                 b+=v
-            if r["cap"]: b+=(r["mult"]-1)*max(proj[p] for p in available)
+            if r["cap"]: b+=max((r["mult"]-1)*proj[p] for p in available)
             return b
         def visit(i,used,total):
             nonlocal best,complete,pruned
@@ -72,7 +72,7 @@ def optimize(data):
             if b is None or (best and b<best[0]): pruned+=1; return
             if i==len(order):
                 if not r["locked"].issubset(used): return
-                complete+=1; captain=min(used,key=lambda p:(-proj[p],p)) if r["cap"] else None; extra=(r["mult"]-1)*proj[captain] if captain else Decimal(0); obj=total+extra; ordered=tuple((s,assign[s]) for s in slots); tie=(fname,ordered,captain or "")
+                complete+=1; captain=min(used,key=lambda p:(-(r["mult"]-1)*proj[p],p)) if r["cap"] else None; extra=(r["mult"]-1)*proj[captain] if captain else Decimal(0); obj=total+extra; ordered=tuple((s,assign[s]) for s in slots); tie=(fname,ordered,captain or "")
                 if best is None or obj>best[0] or (obj==best[0] and tie<best[1]): best=(obj,tie,total,extra,captain,ordered)
                 return
             s=order[i]; remain=len(order)-i-1

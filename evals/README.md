@@ -1,26 +1,44 @@
-# Behavioral evaluation checklist
+# Behavioral evaluations
 
-These are synthetic manual evaluation scenarios, not completed evaluations or
-proof of predictive performance. Keep actual run records separate and do not
-publish private user data. Automated tests live in [tests](../tests).
+These evaluations target **process reliability**, not lucky match outcomes or claimed predictive superiority. They use synthetic data only and keep Schierami skill-only: no production backend is introduced.
 
-| Case | Expected behavior |
-| --- | --- |
-| Modifier enabled, formula missing | Ask for the formula if it can change the module; keep invariant recommendations. |
-| Roster in an accessible attachment | Read it before asking for the same roster again. |
-| Mantra with unknown substitution mode | Clarify Basic/Easy/Master when coverage depends on it; never call `ordered_slots` a Mantra engine. |
-| Custom rules on an offline league | Interpret the supplied rules, test ambiguity with a small example, do not import platform defaults. |
-| Real and fantasy matchday mismatch | Resolve the intended competition/round before using fixtures. |
-| Two sites copying one report | Treat them as one information origin, not independent confirmation. |
-| Old article with a current site header | Verify the article's season, match and update; do not claim freshness from the header. |
-| No live research available | Provide useful provisional advice and state the freshness limit. |
-| Italian request with English resources | Answer in Italian without changing role labels or league terminology. |
-| English request about another soccer league | Answer in English and choose relevant local sources, not automatic Serie A assumptions. |
-| Last-week lucky goal, unchanged opportunities | Avoid automatically promoting the player based only on the outcome. |
-| NFL lineup or unrelated football trivia | Do not force the fantasy-soccer lineup workflow onto an unrelated task. |
+The core question is whether a full-lineup request follows the scientific decision process consistently: use accessible inputs, resolve only material unknowns, keep blockers local, choose the strongest justified decision mode, and never claim computations or freshness that did not occur.
 
-For comparisons, hold model, inputs, available tools and research budget constant.
-Record version, date, scenario, evidence, rule errors, unnecessary questions,
-unsupported claims, tool calls and latency. Judge only information available
-before the deadline; distinguish a lucky result from a sound decision process.
-No behavioral benchmark score is claimed by the packaging or unit-test suite.
+## Evaluation layers
+
+1. **Unit/integration tests** in `tests/` verify deterministic contracts and calculators.
+2. **Behavioral cases** in `evals/cases.json` describe synthetic conversations and machine-checkable process expectations.
+3. **Run scorer** in `evals/score_behavior.py` scores a model/agent run exported as observable JSON. It evaluates actions and claims, never hidden chain-of-thought.
+4. **Real-environment trials** should run the same cases in the intended ChatGPT/Codex environment with the same tools and research budget. Keep those records private when they include user data.
+
+## Required run-result shape
+
+A runner should emit a JSON array whose objects contain:
+
+```json
+{
+  "case_id": "accessible_roster_missing_modifier",
+  "decision_mode": "qualitative_conditional",
+  "checks": {
+    "roster_read": "done",
+    "modifier_rule": "blocked",
+    "candidate_screening": "done"
+  },
+  "asked_for": ["modifier_formula"],
+  "claims": ["module comparison remains conditional"],
+  "scripts_ran": []
+}
+```
+
+`score_behavior.py` compares those observable fields with the expectations in `cases.json` and exits non-zero on any failed case.
+
+## Principles
+
+- A missing modifier formula may block module ranking, but must not block reading an accessible roster or screening candidates.
+- If all material rules and defensible projections/scenarios are supplied, an unjustified qualitative fallback is a failure.
+- Unsupported material rules must narrow the claim; silently deleting them to make an optimizer run is a failure.
+- Do not ask the user for a roster or rule already available in an accessible source.
+- Do not claim a file read, web check, script run, validation or optimum unless the corresponding operation occurred.
+- Judge evidence only as available before the lineup deadline. Separate process quality from realized fantasy points.
+
+For version comparisons, hold model, inputs, available tools and research budget constant. Repeat important cases because one successful sample does not establish consistency. Track rule errors, extraction errors, unnecessary questions, unsupported claims, mode selection, tool usage and latency separately.

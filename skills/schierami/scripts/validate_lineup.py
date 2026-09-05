@@ -14,7 +14,7 @@ ALLOWED_TOP = {"roster", "lineup", "rules"}
 ALLOWED_PLAYER = {"id", "name", "roles"}
 ALLOWED_LINEUP = {"formation", "starters", "bench", "captain_id"}
 ALLOWED_STARTER = {"player_id", "slot"}
-ALLOWED_RULES = {"starter_count", "bench_max", "formations", "slot_eligibility", "captain_required"}
+ALLOWED_RULES = {"starter_count", "bench_max", "formations", "slot_eligibility", "captain_required", "locked_starters", "excluded_players"}
 
 
 def emit(obj: dict, code: int) -> None:
@@ -78,7 +78,16 @@ def contract(data: object):
         if unknown:
             raise ContractError(f"formation {name} references slots without eligibility: {', '.join(unknown)}")
 
-    return by_id, {"formation": formation, "starters": starters, "bench": bench, "captain_id": lineup.get("captain_id")}, {"starter_count": starter_count, "bench_max": bench_max, "captain_required": captain_required, "formations": formations, "slot_eligibility": eligibility}
+    restrictions = {}
+    for key in ("locked_starters", "excluded_players"):
+        values = [normalize_id(x, f"$.rules.{key}[]") for x in require_array(rules.get(key, []), f"$.rules.{key}")]
+        if len(values) != len(set(values)) or set(values) - set(by_id):
+            raise ContractError(f"{key} contains duplicate or unknown players")
+        restrictions[key] = set(values)
+    if restrictions["locked_starters"] & restrictions["excluded_players"]:
+        raise ContractError("players cannot be both locked and excluded")
+
+    return by_id, {"formation": formation, "starters": starters, "bench": bench, "captain_id": lineup.get("captain_id")}, {"starter_count": starter_count, "bench_max": bench_max, "captain_required": captain_required, "formations": formations, "slot_eligibility": eligibility, **restrictions}
 
 
 def validate(data: object) -> dict:
@@ -120,6 +129,9 @@ def validate(data: object) -> dict:
         if missing: errors.append("missing slots: " + ", ".join(sorted(missing)))
         if extra: errors.append("extra slots: " + ", ".join(sorted(extra)))
 
+    if rules["locked_starters"] - seen_players:
+        errors.append("missing locked starters: " + ", ".join(sorted(rules["locked_starters"] - seen_players)))
+
     bench_ids = []
     for i, raw in enumerate(lineup["bench"]):
         try: pid = normalize_id(raw, f"$.lineup.bench[{i}]")
@@ -130,6 +142,9 @@ def validate(data: object) -> dict:
         seen_players.add(pid)
     if rules["bench_max"] is not None and len(bench_ids) > rules["bench_max"]:
         errors.append(f"bench size {len(bench_ids)} > {rules['bench_max']}")
+
+    if rules["excluded_players"] & seen_players:
+        errors.append("excluded players selected: " + ", ".join(sorted(rules["excluded_players"] & seen_players)))
 
     captain = lineup["captain_id"]
     if rules["captain_required"] and captain is None: errors.append("captain required")

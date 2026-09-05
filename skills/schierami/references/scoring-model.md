@@ -10,7 +10,7 @@ The deterministic tools reject unknown supported-contract keys, malformed boolea
 
 ## `validate_lineup.py`
 
-Input is exactly `roster`, `lineup` and `rules`. It checks ownership, duplicate use, exact counts, formation slots, role eligibility, bench limit and captain placement. It does not infer platform settings, official role tables or conditional Mantra logic.
+Input is exactly `roster`, `lineup` and `rules`. It checks ownership, duplicate use, exact counts, formation slots, role eligibility, bench limit, captain placement, locked starters and excluded players. It does not infer platform settings, official role tables or conditional Mantra logic.
 
 Exit code 0 means valid under the supplied contract; 2 means structurally invalid; 1 means malformed or unsupported input.
 
@@ -38,7 +38,16 @@ Supported rules are deliberately narrow: non-negative `max_substitutions`, `subs
 
 ## `evaluate_lineups.py`
 
-Compares complete supplied candidate lineups over a supplied weighted scenario ensemble. Every candidate is scored inside every scenario after substitutions and nonlinear modifiers; weights are then normalized and used to compute expected score and dispersion.
+Compares complete supplied candidate lineups over a supplied weighted scenario ensemble.
+
+Version 2 requires `roster`, `candidates`, `scenarios`, scoring `rules` and separate
+`lineup_rules`. Every candidate supplies `id`, `formation`, `starters` and `bench`.
+`lineup_rules` is the shared validator contract with explicit `starter_count`,
+`bench_max`, `formations`, `slot_eligibility` and `captain_required`; optional
+`locked_starters` and `excluded_players` are enforced. The evaluator rejects every
+illegal candidate before scoring. Scoring and legality eligibility maps must agree.
+Captain scoring is not supported here: a required or supplied captain fails closed.
+Existing v1 inputs must add the actual formation and legality settings, not defaults. Every candidate is scored inside every scenario after substitutions and nonlinear modifiers; weights are then normalized and used to compute expected score and dispersion.
 
 `optimality: best_among_supplied_candidates_only` proves only the ranking of that candidate set under the supplied scenarios. Generate enough materially different candidates when nonlinear rules could make unusual formations or bench orders competitive.
 

@@ -5,14 +5,21 @@ from decimal import Decimal, localcontext
 import json, sys
 from typing import Any
 from _core import ContractError, decimal_number, normalize_id, reject_unknown, require_array, require_decimal, require_object, require_string, require_string_list
-from score_scenario import score
+from score_scenario import score, parse_rules, parse_player
+from validate_lineup import validate
 
-TOP={"roster","candidates","scenarios","rules"}; PLAYER={"id","name","roles"}; CAND={"id","starters","bench"}; START={"player_id","slot"}; SCEN={"id","weight","outcomes"}; OUT={"player_id","valid_vote","fantasy_points","base_vote"}
+TOP={"roster","candidates","scenarios","rules","lineup_rules"}; PLAYER={"id","name","roles"}; CAND={"id","formation","starters","bench","captain_id"}; START={"player_id","slot"}; SCEN={"id","weight","outcomes"}; OUT={"player_id","valid_vote","fantasy_points","base_vote"}
 def emit(x,c): print(json.dumps(x,ensure_ascii=False,indent=2)); raise SystemExit(c)
 
 def evaluate(data: object)->dict[str,Any]:
     d=require_object(data,"$"); reject_unknown(d,TOP,"$")
-    if set(d)!=TOP: raise ContractError("$ requires roster, candidates, scenarios and rules")
+    if set(d)!=TOP: raise ContractError("$ requires roster, candidates, scenarios, rules and lineup_rules")
+    legality=require_object(d["lineup_rules"],"$.lineup_rules")
+    required={"starter_count","bench_max","formations","slot_eligibility","captain_required"}
+    if required-set(legality): raise ContractError("lineup_rules requires explicit " + ", ".join(sorted(required-set(legality))))
+    scoring=parse_rules(d["rules"])
+    declared={k:set(require_string_list(v,"lineup_rules.slot_eligibility[]",nonempty=True)) for k,v in require_object(legality["slot_eligibility"],"lineup_rules.slot_eligibility").items()}
+    if declared!=scoring["slot_eligibility"]: raise ContractError("scoring and lineup slot eligibility must agree")
     roster={}
     for i,x in enumerate(require_array(d["roster"],"$.roster")):
         p=f"$.roster[{i}]"; x=require_object(x,p); reject_unknown(x,PLAYER,p)
@@ -23,7 +30,11 @@ def evaluate(data: object)->dict[str,Any]:
     candidates=[]; ids=set()
     for i,x in enumerate(require_array(d["candidates"],"$.candidates")):
         p=f"$.candidates[{i}]"; x=require_object(x,p); reject_unknown(x,CAND,p)
-        if set(x)!=CAND: raise ContractError(f"{p} requires id, starters and bench")
+        if {"id","formation","starters","bench"}-set(x): raise ContractError(f"{p} requires id, formation, starters and bench")
+        checked=validate({"roster":d["roster"],"lineup":{k:v for k,v in x.items() if k!="id"},"rules":legality})
+        if not checked["ok"]: raise ContractError(f"candidate {x['id']} is illegal: " + "; ".join(checked["errors"]))
+        if legality["captain_required"] or x.get("captain_id") is not None:
+            raise ContractError("scenario evaluator does not support captain scoring; do not omit a real captain rule")
         cid=require_string(x["id"],p+".id")
         if cid in ids: raise ContractError(f"duplicate candidate id: {cid}")
         ids.add(cid); used=set(); slots=set(); starters=[]
@@ -54,6 +65,7 @@ def evaluate(data: object)->dict[str,Any]:
             if "player_id" not in o or "valid_vote" not in o: raise ContractError(f"{q} requires player_id and valid_vote")
             pid=normalize_id(o["player_id"],q+".player_id")
             if pid not in roster or pid in outcomes: raise ContractError(f"scenario {sid} has unknown or duplicate player outcome: {pid}")
+            parse_player({**o,"roles":roster[pid]["roles"]},q,False)
             outcomes[pid]=dict(o)
         missing=sorted(set(roster)-set(outcomes))
         if missing: raise ContractError(f"scenario {sid} missing roster outcomes: {', '.join(missing)}")
@@ -75,7 +87,7 @@ def evaluate(data: object)->dict[str,Any]:
         rankings.append({"candidate_id":c["id"],"expected_total":decimal_number(exp),"standard_deviation":decimal_number(sd),"minimum_total":decimal_number(min(totals)),"maximum_total":decimal_number(max(totals)),"scenario_results":rows,"_e":exp})
     rankings.sort(key=lambda x:(-x["_e"],x["candidate_id"]))
     for i,x in enumerate(rankings,1): x.pop("_e"); x["rank"]=i
-    return {"ok":True,"contract":"evaluate_lineups.v1","objective_model":"expected_own_fantasy_score_over_supplied_scenarios","best_candidate_id":rankings[0]["candidate_id"],"optimality":"best_among_supplied_candidates_only","scenario_weights_normalized":True,"rankings":rankings}
+    return {"ok":True,"contract":"evaluate_lineups.v2","legality_validated":True,"objective_model":"expected_own_fantasy_score_over_supplied_scenarios","best_candidate_id":rankings[0]["candidate_id"],"optimality":"best_among_supplied_candidates_only","scenario_weights_normalized":True,"rankings":rankings}
 def main():
     try: out=evaluate(json.load(sys.stdin))
     except (json.JSONDecodeError,ContractError,KeyError,TypeError) as e: emit({"ok":False,"message":str(e)},1)

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schierami.dev/schemas/run-report.schema.json",
+  "title": "Schierami observable run report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision_mode", "checks", "blockers", "execution"],
+  "properties": {
+    "decision_mode": {"enum": ["exact_additive_optimum", "scenario_candidate_optimum", "deterministic_validation_scoring", "qualitative_conditional"]},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "status": {"enum": ["done", "blocked", "not_applicable"]},
+          "source": {"type": ["string", "null"]},
+          "note": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact", "blocks"],
+        "properties": {
+          "fact": {"type": "string", "minLength": 1},
+          "blocks": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+          "flip_condition": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script_ran", "contract"],
+      "properties": {
+        "script_ran": {"type": ["string", "null"]},
+        "contract": {"type": ["string", "null"]},
+        "optimality": {"type": ["string", "null"]}
+      }
+    }
+  }
+}
