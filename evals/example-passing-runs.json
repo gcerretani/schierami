@@ -1,0 +1,42 @@
+[
+  {
+    "case_id": "accessible_roster_missing_modifier",
+    "decision_mode": "qualitative_conditional",
+    "checks": {"roster_read": "done", "modifier_rule": "blocked", "candidate_screening": "done"},
+    "asked_for": ["modifier_formula"],
+    "claims": ["The module comparison remains conditional until the modifier formula is known."],
+    "scripts_ran": []
+  },
+  {
+    "case_id": "complete_additive_contract",
+    "decision_mode": "exact_additive_optimum",
+    "checks": {"roster_read": "done", "formation_rules": "done", "deterministic_calculation": "done"},
+    "asked_for": [],
+    "claims": ["Exact additive optimum within the supplied supported model."],
+    "scripts_ran": ["optimize_lineup.py"]
+  },
+  {
+    "case_id": "unsupported_material_rule",
+    "decision_mode": "qualitative_conditional",
+    "checks": {"custom_rule": "blocked", "legality": "done"},
+    "asked_for": [],
+    "claims": ["The material custom rule is unsupported by the deterministic engine, so no real-rules optimum is claimed."],
+    "scripts_ran": ["validate_lineup.py"]
+  },
+  {
+    "case_id": "matchday_mismatch",
+    "decision_mode": "qualitative_conditional",
+    "checks": {"matchday_mapping": "done"},
+    "asked_for": [],
+    "claims": ["Fantasy round 2 is mapped to the relevant real-league round before fixture evaluation."],
+    "scripts_ran": []
+  },
+  {
+    "case_id": "copied_sources",
+    "decision_mode": "qualitative_conditional",
+    "checks": {"source_independence": "done"},
+    "asked_for": [],
+    "claims": ["The repeated reports are treated as one origin, not independent confirmation."],
+    "scripts_ran": []
+  }
+]
