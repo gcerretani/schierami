@@ -40,3 +40,13 @@ If an item is irrelevant, mark it `not_applicable`, not `done`.
 - `qualitative_conditional`: the recommendation depends on evidence or rules that cannot be represented or quantified defensibly.
 
 Always preserve the weakest material limitation in the user-facing claim.
+
+## Forecast trace
+
+For forecast-bundle decisions, retain forecast cutoff, input/bundle SHA-256,
+model name/version/status, evidence origins, history support and exclusions,
+independence assumptions, sampling method/budget/seed, candidate-set scope and
+returned optimality. Record actual execution separately from user-supplied checks.
+Sampling error does not measure model uncertainty. Save prospective forecasts
+before kickoff through an authorized file tool; do not claim persistence or
+prospective validation from a reconstructed replay. See [forecasting](forecasting.md).

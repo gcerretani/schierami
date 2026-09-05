@@ -27,3 +27,5 @@ The [deterministic engine contract](../skills/schierami/references/scoring-model
 describes what the optional runtime Python scripts actually support, while
 [workflow traceability](../skills/schierami/references/workflow-traceability.md)
 describes completion gates and observable execution records.
+
+See [forecast validation](forecast-validation.md) for the 0.4 forecasting contracts, benchmark protocol and release evidence.

@@ -2,41 +2,111 @@
   {
     "case_id": "accessible_roster_missing_modifier",
     "decision_mode": "qualitative_conditional",
-    "checks": {"roster_read": "done", "modifier_rule": "blocked", "candidate_screening": "done"},
-    "asked_for": ["modifier_formula"],
-    "claims": ["The module comparison remains conditional until the modifier formula is known."],
+    "checks": {
+      "roster_read": "done",
+      "modifier_rule": "blocked",
+      "candidate_screening": "done"
+    },
+    "asked_for": [
+      "modifier_formula"
+    ],
+    "claims": [
+      "The module comparison remains conditional until the modifier formula is known."
+    ],
     "scripts_ran": []
   },
   {
     "case_id": "complete_additive_contract",
     "decision_mode": "exact_additive_optimum",
-    "checks": {"roster_read": "done", "formation_rules": "done", "deterministic_calculation": "done"},
+    "checks": {
+      "roster_read": "done",
+      "formation_rules": "done",
+      "deterministic_calculation": "done"
+    },
     "asked_for": [],
-    "claims": ["Exact additive optimum within the supplied supported model."],
-    "scripts_ran": ["optimize_lineup.py"]
+    "claims": [
+      "Exact additive optimum within the supplied supported model."
+    ],
+    "scripts_ran": [
+      "optimize_lineup.py"
+    ]
   },
   {
     "case_id": "unsupported_material_rule",
     "decision_mode": "qualitative_conditional",
-    "checks": {"custom_rule": "blocked", "legality": "done"},
+    "checks": {
+      "custom_rule": "blocked",
+      "legality": "done"
+    },
     "asked_for": [],
-    "claims": ["The material custom rule is unsupported by the deterministic engine, so no real-rules optimum is claimed."],
-    "scripts_ran": ["validate_lineup.py"]
+    "claims": [
+      "The material custom rule is unsupported by the deterministic engine, so no real-rules optimum is claimed."
+    ],
+    "scripts_ran": [
+      "validate_lineup.py"
+    ]
   },
   {
     "case_id": "matchday_mismatch",
     "decision_mode": "qualitative_conditional",
-    "checks": {"matchday_mapping": "done"},
+    "checks": {
+      "matchday_mapping": "done"
+    },
     "asked_for": [],
-    "claims": ["Fantasy round 2 is mapped to the relevant real-league round before fixture evaluation."],
+    "claims": [
+      "Fantasy round 2 is mapped to the relevant real-league round before fixture evaluation."
+    ],
     "scripts_ran": []
   },
   {
     "case_id": "copied_sources",
     "decision_mode": "qualitative_conditional",
-    "checks": {"source_independence": "done"},
+    "checks": {
+      "source_independence": "done"
+    },
     "asked_for": [],
-    "claims": ["The repeated reports are treated as one origin, not independent confirmation."],
+    "claims": [
+      "The repeated reports are treated as one origin, not independent confirmation."
+    ],
+    "scripts_ran": []
+  },
+  {
+    "case_id": "forecast_future_information",
+    "decision_mode": "scenario_candidate_optimum",
+    "checks": {
+      "forecast_cutoff": "done",
+      "future_data_exclusion": "done"
+    },
+    "asked_for": [],
+    "claims": [
+      "Illustrative reconstructed evaluation only."
+    ],
+    "scripts_ran": [
+      "build_forecasts.py"
+    ]
+  },
+  {
+    "case_id": "forecast_sample_optimality",
+    "decision_mode": "scenario_candidate_optimum",
+    "checks": {},
+    "asked_for": [],
+    "claims": [
+      "Best supplied candidate on this sample; sampling noise is separate from forecast error."
+    ],
+    "scripts_ran": [
+      "run_forecast.py"
+    ]
+  },
+  {
+    "case_id": "forecast_conflicted_source",
+    "decision_mode": "qualitative_conditional",
+    "checks": {
+      "forecast_evidence": "blocked"
+    },
+    "asked_for": [],
+    "claims": [
+      "The comparison remains conditional on resolved evidence."
+    ],
     "scripts_ran": []
   }
 ]

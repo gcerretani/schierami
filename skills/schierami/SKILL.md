@@ -40,6 +40,14 @@ Use `exact additive optimum` only when all material lineup effects fit the addit
 
 A missing modifier formula may prevent a final module ranking, but it does not excuse skipping roster extraction, availability research, candidate screening or legality checks that do not depend on that formula.
 
+## Forecasting and measurement
+
+Load [forecasting](references/forecasting.md) when suitable historical observations or a supplied forecast bundle exist. Run `scripts/build_forecasts.py` for the explicit empirical baseline, not for made-up projections. Inspect support counts, cutoff exclusions, source conflicts, cold starts and independence assumptions before using its output. A changed role, injury or biased appearances-only dataset can invalidate a historical baseline; preserve the blocker instead of manufacturing probabilities.
+
+Use `scripts/run_forecast.py` (also dispatched by `run_lineup.py`) to evaluate complete legal XI/bench candidates over a validated bundle. Joint blocks preserve supplied dependencies; separate blocks explicitly assume independence. Choose exact enumeration or seeded Monte Carlo with a declared budget. A sample ranking and its sampling error are not a proof about the true predictive distribution, and are never a winning probability.
+
+Use `scripts/backtest_forecasts.py` to compare predeclared baselines on chronological held-out matches, optionally replaying candidate decisions. Store observable inputs, cutoffs, model version and output hashes through an available authorized file mechanism. Do not assume the host filesystem persists. Calibration diagnostics and passing synthetic tests do not establish calibrated forecasts or sporting superiority; do not claim either without separate real-data validation.
+
 ## Decision quality
 
 Prefer repeatable opportunity, expected minutes, tactical role and multi-horizon evidence to isolated recent bonuses. Treat consensus as a prior, not a verdict. Distinguish forecast uncertainty from rule uncertainty and source uncertainty. One decisive official source can outweigh many copied reports.

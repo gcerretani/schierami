@@ -63,3 +63,11 @@ Apply threshold functions inside each scenario. In general `E[f(X)] != f(E[X])`.
 - **qualitative/conditional**: quantitative inputs or executable rule coverage were insufficient.
 
 Never upgrade a weaker mode into a stronger claim in prose.
+
+## Forecast bridge (0.4)
+
+`build_forecasts.py`, `run_forecast.py` and `backtest_forecasts.py` add a separately
+versioned probabilistic layer; read [forecasting](forecasting.md) before use.
+They do not expand the existing league-scoring contract. `run_lineup.py` dispatches
+forecast-bundle payloads through this layer and preserves sample-only optimality
+when Monte Carlo is used. Existing v2 evaluator inputs remain supported.

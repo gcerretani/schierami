@@ -1,0 +1,46 @@
+{
+  "scope": {"competition": "Synthetic soccer","season": "2026-demo","scoring_id": "synthetic-score-v1","vote_provider": "synthetic editorial"},
+  "as_of": "2026-08-24T12:00:00+00:00",
+  "deadline": "2026-08-25T12:00:00+00:00",
+  "roster": [
+    {"id": "keeper","roles": ["P"]},
+    {"id": "steady","roles": ["D"]},
+    {"id": "risky","roles": ["D"]},
+    {"id": "forward","roles": ["A"]}
+  ],
+  "evidence": [
+    {"id": "s1","origin_id": "original-match-1","locator": "synthetic://match/1","published_at": "2026-08-01T23:00:00+00:00","retrieved_at": "2026-08-01T23:00:00+00:00","status": "confirmed","valid_until": null},
+    {"id": "s2","origin_id": "original-match-2","locator": "synthetic://match/2","published_at": "2026-08-05T23:00:00+00:00","retrieved_at": "2026-08-05T23:00:00+00:00","status": "confirmed","valid_until": null},
+    {"id": "s3","origin_id": "original-match-3","locator": "synthetic://match/3","published_at": "2026-08-09T23:00:00+00:00","retrieved_at": "2026-08-09T23:00:00+00:00","status": "confirmed","valid_until": null},
+    {"id": "s4","origin_id": "original-match-4","locator": "synthetic://match/4","published_at": "2026-08-13T23:00:00+00:00","retrieved_at": "2026-08-13T23:00:00+00:00","status": "confirmed","valid_until": null},
+    {"id": "s5","origin_id": "original-match-5","locator": "synthetic://match/5","published_at": "2026-08-17T23:00:00+00:00","retrieved_at": "2026-08-17T23:00:00+00:00","status": "confirmed","valid_until": null},
+    {"id": "s6","origin_id": "original-match-6","locator": "synthetic://match/6","published_at": "2026-08-21T23:00:00+00:00","retrieved_at": "2026-08-21T23:00:00+00:00","status": "confirmed","valid_until": null}
+  ],
+  "history": [
+    {"player_id": "keeper","match_id": "m1","kickoff": "2026-08-01T20:00:00+00:00","available_at": "2026-08-01T23:00:00+00:00","source_id": "s1","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m1","kickoff": "2026-08-01T20:00:00+00:00","available_at": "2026-08-01T23:00:00+00:00","source_id": "s1","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m1","kickoff": "2026-08-01T20:00:00+00:00","available_at": "2026-08-01T23:00:00+00:00","source_id": "s1","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 10.0},
+    {"player_id": "forward","match_id": "m1","kickoff": "2026-08-01T20:00:00+00:00","available_at": "2026-08-01T23:00:00+00:00","source_id": "s1","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "keeper","match_id": "m2","kickoff": "2026-08-05T20:00:00+00:00","available_at": "2026-08-05T23:00:00+00:00","source_id": "s2","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m2","kickoff": "2026-08-05T20:00:00+00:00","available_at": "2026-08-05T23:00:00+00:00","source_id": "s2","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m2","kickoff": "2026-08-05T20:00:00+00:00","available_at": "2026-08-05T23:00:00+00:00","source_id": "s2","started": false,"minutes": 0,"valid_vote": false,"base_vote": null,"fantasy_points": 0},
+    {"player_id": "forward","match_id": "m2","kickoff": "2026-08-05T20:00:00+00:00","available_at": "2026-08-05T23:00:00+00:00","source_id": "s2","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "keeper","match_id": "m3","kickoff": "2026-08-09T20:00:00+00:00","available_at": "2026-08-09T23:00:00+00:00","source_id": "s3","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m3","kickoff": "2026-08-09T20:00:00+00:00","available_at": "2026-08-09T23:00:00+00:00","source_id": "s3","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m3","kickoff": "2026-08-09T20:00:00+00:00","available_at": "2026-08-09T23:00:00+00:00","source_id": "s3","started": false,"minutes": 0,"valid_vote": false,"base_vote": null,"fantasy_points": 0},
+    {"player_id": "forward","match_id": "m3","kickoff": "2026-08-09T20:00:00+00:00","available_at": "2026-08-09T23:00:00+00:00","source_id": "s3","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "keeper","match_id": "m4","kickoff": "2026-08-13T20:00:00+00:00","available_at": "2026-08-13T23:00:00+00:00","source_id": "s4","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m4","kickoff": "2026-08-13T20:00:00+00:00","available_at": "2026-08-13T23:00:00+00:00","source_id": "s4","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m4","kickoff": "2026-08-13T20:00:00+00:00","available_at": "2026-08-13T23:00:00+00:00","source_id": "s4","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 10.0},
+    {"player_id": "forward","match_id": "m4","kickoff": "2026-08-13T20:00:00+00:00","available_at": "2026-08-13T23:00:00+00:00","source_id": "s4","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "keeper","match_id": "m5","kickoff": "2026-08-17T20:00:00+00:00","available_at": "2026-08-17T23:00:00+00:00","source_id": "s5","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m5","kickoff": "2026-08-17T20:00:00+00:00","available_at": "2026-08-17T23:00:00+00:00","source_id": "s5","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m5","kickoff": "2026-08-17T20:00:00+00:00","available_at": "2026-08-17T23:00:00+00:00","source_id": "s5","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 10.0},
+    {"player_id": "forward","match_id": "m5","kickoff": "2026-08-17T20:00:00+00:00","available_at": "2026-08-17T23:00:00+00:00","source_id": "s5","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "keeper","match_id": "m6","kickoff": "2026-08-21T20:00:00+00:00","available_at": "2026-08-21T23:00:00+00:00","source_id": "s6","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0},
+    {"player_id": "steady","match_id": "m6","kickoff": "2026-08-21T20:00:00+00:00","available_at": "2026-08-21T23:00:00+00:00","source_id": "s6","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.5},
+    {"player_id": "risky","match_id": "m6","kickoff": "2026-08-21T20:00:00+00:00","available_at": "2026-08-21T23:00:00+00:00","source_id": "s6","started": false,"minutes": 0,"valid_vote": false,"base_vote": null,"fantasy_points": 0},
+    {"player_id": "forward","match_id": "m6","kickoff": "2026-08-21T20:00:00+00:00","available_at": "2026-08-21T23:00:00+00:00","source_id": "s6","started": true,"minutes": 90,"valid_vote": true,"base_vote": 6.0,"fantasy_points": 6.0}
+  ],
+  "model": {"name": "role_shrinkage","window": 3,"prior_strength": 2,"lookback_days": 365}
+}

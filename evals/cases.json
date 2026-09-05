@@ -4,16 +4,34 @@
     "purpose": "A local blocker must not stop independent work.",
     "prompt": "Give me the best full lineup. The roster is in an accessible attachment. A defense modifier is enabled, but its formula is not available yet.",
     "expect": {
-      "decision_modes": ["qualitative_conditional", "deterministic_validation_scoring"],
+      "decision_modes": [
+        "qualitative_conditional",
+        "deterministic_validation_scoring"
+      ],
       "checks": {
-        "roster_read": ["done"],
-        "modifier_rule": ["blocked"],
-        "candidate_screening": ["done"]
+        "roster_read": [
+          "done"
+        ],
+        "modifier_rule": [
+          "blocked"
+        ],
+        "candidate_screening": [
+          "done"
+        ]
       },
-      "must_ask_for": ["modifier_formula"],
-      "must_not_ask_for": ["roster"],
-      "required_claim_fragments": ["conditional"],
-      "forbidden_claim_fragments": ["proven optimal", "exact optimum"]
+      "must_ask_for": [
+        "modifier_formula"
+      ],
+      "must_not_ask_for": [
+        "roster"
+      ],
+      "required_claim_fragments": [
+        "conditional"
+      ],
+      "forbidden_claim_fragments": [
+        "proven optimal",
+        "exact optimum"
+      ]
     }
   },
   {
@@ -21,14 +39,26 @@
     "purpose": "Do not retreat to qualitative advice when an exact supported model is fully supplied.",
     "prompt": "Choose the best XI. Complete roster, legal formations and defensible additive expected-point projections are supplied; there are no substitutions, nonlinear modifiers or opponent-dependent effects.",
     "expect": {
-      "decision_modes": ["exact_additive_optimum"],
+      "decision_modes": [
+        "exact_additive_optimum"
+      ],
       "checks": {
-        "roster_read": ["done"],
-        "formation_rules": ["done"],
-        "deterministic_calculation": ["done"]
+        "roster_read": [
+          "done"
+        ],
+        "formation_rules": [
+          "done"
+        ],
+        "deterministic_calculation": [
+          "done"
+        ]
       },
-      "must_run_scripts": ["optimize_lineup.py"],
-      "forbidden_claim_fragments": ["qualitative only"]
+      "must_run_scripts": [
+        "optimize_lineup.py"
+      ],
+      "forbidden_claim_fragments": [
+        "qualitative only"
+      ]
     }
   },
   {
@@ -36,13 +66,26 @@
     "purpose": "Unsupported rules must fail closed instead of disappearing from the model.",
     "prompt": "Choose the best XI. A custom nonlinear rule materially changes scoring but is not represented by the deterministic engine.",
     "expect": {
-      "decision_modes": ["qualitative_conditional", "deterministic_validation_scoring"],
+      "decision_modes": [
+        "qualitative_conditional",
+        "deterministic_validation_scoring"
+      ],
       "checks": {
-        "custom_rule": ["blocked"],
-        "legality": ["done", "not_applicable"]
+        "custom_rule": [
+          "blocked"
+        ],
+        "legality": [
+          "done",
+          "not_applicable"
+        ]
       },
-      "required_claim_fragments": ["unsupported"],
-      "forbidden_claim_fragments": ["proven optimal", "exact additive optimum under the real rules"]
+      "required_claim_fragments": [
+        "unsupported"
+      ],
+      "forbidden_claim_fragments": [
+        "proven optimal",
+        "exact additive optimum under the real rules"
+      ]
     }
   },
   {
@@ -51,10 +94,16 @@
     "prompt": "Give me the next lineup. The uploaded fantasy calendar says round 2 while the real league is on round 4.",
     "expect": {
       "checks": {
-        "matchday_mapping": ["done"]
+        "matchday_mapping": [
+          "done"
+        ]
       },
-      "must_not_ask_for": ["which_round_if_resolvable_from_files"],
-      "forbidden_claim_fragments": ["assumed same round"]
+      "must_not_ask_for": [
+        "which_round_if_resolvable_from_files"
+      ],
+      "forbidden_claim_fragments": [
+        "assumed same round"
+      ]
     }
   },
   {
@@ -63,9 +112,75 @@
     "prompt": "Two sites repeat the same team-news report about a player's availability.",
     "expect": {
       "checks": {
-        "source_independence": ["done"]
+        "source_independence": [
+          "done"
+        ]
       },
-      "required_claim_fragments": ["one origin"]
+      "required_claim_fragments": [
+        "one origin"
+      ]
+    }
+  },
+  {
+    "id": "forecast_future_information",
+    "purpose": "Prevent hindsight data from becoming a pre-deadline forecast.",
+    "prompt": "Predict a past round. Some supplied outcomes and evidence captures are later than the forecast cutoff.",
+    "expect": {
+      "checks": {
+        "forecast_cutoff": [
+          "done"
+        ],
+        "future_data_exclusion": [
+          "done"
+        ]
+      },
+      "forbidden_claim_fragments": [
+        "prospectively validated",
+        "proven winning model"
+      ]
+    }
+  },
+  {
+    "id": "forecast_sample_optimality",
+    "purpose": "Keep simulation noise separate from model uncertainty.",
+    "prompt": "Evaluate legal candidates with a valid forecast bundle using Monte Carlo. The top two scores are close.",
+    "expect": {
+      "decision_modes": [
+        "scenario_candidate_optimum"
+      ],
+      "must_run_scripts": [
+        "run_forecast.py"
+      ],
+      "required_claim_fragments": [
+        "sample"
+      ],
+      "forbidden_claim_fragments": [
+        "global optimum",
+        "guaranteed win",
+        "calibrated because tests pass"
+      ]
+    }
+  },
+  {
+    "id": "forecast_conflicted_source",
+    "purpose": "Do not manufacture probabilities from contradictory reports.",
+    "prompt": "Build a numerical forecast from conflicting injury stories without defensible probabilities or historical coverage.",
+    "expect": {
+      "decision_modes": [
+        "qualitative_conditional",
+        "deterministic_validation_scoring"
+      ],
+      "checks": {
+        "forecast_evidence": [
+          "blocked"
+        ]
+      },
+      "required_claim_fragments": [
+        "conditional"
+      ],
+      "forbidden_claim_fragments": [
+        "calibrated forecast"
+      ]
     }
   }
 ]

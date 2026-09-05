@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Single deterministic entry point with an observable execution report.
 
-This dispatcher never creates forecasts, probabilities, rules or scenarios. It chooses
-only among deterministic operations already supported by the supplied payload.
+This dispatcher never invents forecasts, probabilities or league rules. It chooses
+only among operations supported by explicit supplied inputs and contracts.
 """
 from __future__ import annotations
 
@@ -12,6 +12,8 @@ from typing import Any
 
 from _core import ContractError, reject_unknown, require_array, require_object, require_string
 from evaluate_lineups import evaluate
+from run_forecast import run as run_forecast
+from forecast_core import read_request
 from optimize_lineup import optimize
 from score_scenario import score
 from validate_lineup import validate
@@ -56,6 +58,9 @@ def trace(data: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dict[str, An
 
 def dispatch(payload: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:
     keys = set(payload)
+    if "forecast_bundle" in keys:
+        result = run_forecast(payload)
+        return "scenario_candidate_optimum", "run_forecast.py", result
     if {"roster", "candidates", "scenarios", "rules", "lineup_rules"}.issubset(keys):
         result = evaluate(payload)
         return "scenario_candidate_optimum", "evaluate_lineups.py", result
@@ -91,7 +96,7 @@ def run(data: object) -> dict[str, Any]:
 
 def main() -> None:
     try:
-        out = run(json.load(sys.stdin))
+        out = run(read_request())
     except (json.JSONDecodeError, ContractError, KeyError, TypeError) as exc:
         emit({"ok": False, "message": str(exc)}, 1)
     emit(out, 0 if out["ok"] else 2)

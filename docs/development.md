@@ -81,3 +81,13 @@ prediction.
 Coding agents should follow the compact [AGENTS.md](../AGENTS.md) guide in addition
 to [CONTRIBUTING.md](../CONTRIBUTING.md). See [releases](releases.md) for versioning,
 package contents and publication.
+
+## Forecasting smoke test
+
+```sh
+python tools/forecast_demo.py --output dist/forecast-demo
+```
+
+This runs the synthetic history-to-forecast-to-decision pipeline and a three-fold
+benchmark. Outputs are illustrative fixtures, not measured football performance.
+See [forecast validation](forecast-validation.md) before evaluating real data.
