@@ -1,40 +1,56 @@
-# Scenario scoring and deterministic tools
+# Deterministic decision engine
 
-The bundled scripts are calculators, not forecast models and not replicas of any host platform. Use them only when the user's confirmed rules fit the declared contract. Never coerce an unsupported rule into a similar-looking field.
+The bundled scripts are local calculators and optimizers, not a hosted backend and not replicas of any fantasy platform. Unsupported rules must fail closed or remain outside the claimed optimum.
+
+The method separates four layers: rules determine legality and scoring; forecasts/scenarios describe uncertainty; optimization chooses an action for an explicit objective; evaluation measures whether that process improves decisions over time. A correct optimizer fed invented projections is not a scientific forecast.
+
+## Contract guarantees
+
+The deterministic tools reject unknown supported-contract keys, malformed booleans/counts, duplicate identities where ambiguous, missing valid-vote scores and non-finite numeric values. Threshold arithmetic uses decimal comparison, so exact boundaries such as `6.1` are not lost to binary floating-point error.
 
 ## `validate_lineup.py`
 
-Input is JSON with `roster`, `lineup` and `rules`.
+Input is exactly `roster`, `lineup` and `rules`. It checks ownership, duplicate use, exact counts, formation slots, role eligibility, bench limit and captain placement. It does not infer platform settings, official role tables or conditional Mantra logic.
 
-- `roster`: array of `{id, name?, roles:[...]}`.
-- `lineup`: `{formation, starters:[{player_id, slot}], bench:[player_id...], captain_id?}`.
-- `rules`: `{starter_count, bench_max?, formations, slot_eligibility, captain_required?}`.
-- `formations` maps a formation name to the exact required slot names.
-- `slot_eligibility` maps each slot to the fantasy roles that can occupy it.
+Exit code 0 means valid under the supplied contract; 2 means structurally invalid; 1 means malformed or unsupported input.
 
-The validator checks ownership, duplicate use, count, formation slots, eligibility, bench limit and captain placement. It does not know whether a supplied role/slot table is the official one, resolve conditional Mantra constraints, apply substitutions or infer a platform setting.
+## `optimize_lineup.py`
 
-Exit code 0 means structurally valid under the supplied contract; 2 means invalid; 1 means malformed/unsupported input. Output is JSON.
+Performs exact branch-and-bound search across all legal XIs representable by the supplied formations.
+
+Input:
+
+- `roster`: `{id, name?, roles:[...]}` rows;
+- `projections`: exactly one `{player_id, expected_points}` row per roster player;
+- `rules`: `starter_count`, `formations`, `slot_eligibility`, optional `captain_required`, `captain_multiplier`, `locked_starters`, `excluded_players`.
+
+Supported objective: `additive_expected_fantasy_points`.
+
+`optimality: proven_within_supported_model` means no other legal XI in the declared formations scores higher under those supplied additive projections and constraints. It does not include bench order, substitution outcomes, nonlinear modifiers, correlated scenarios, opponent score, win probability or standings points.
 
 ## `score_scenario.py`
 
-Score one explicit outcome after receiving player values; it does not estimate those values. Each starter/bench entry supplies `player_id`, `slot`, `roles`, `valid_vote`, `fantasy_points` and optional `base_vote`. `fantasy_points` must already include the user's player-level vote/event bonuses and maluses. Do not add them a second time.
+Scores one explicit realized or hypothetical outcome. Each starter supplies `player_id`, `slot`, `roles`, exact boolean `valid_vote`, and `fantasy_points` when valid; `base_vote` is required when selected by a modifier. Bench rows omit `slot`.
 
-Supported rules are intentionally narrow:
+Supported rules are deliberately narrow: non-negative `max_substitutions`, `substitution_mode: "ordered_slots"`, explicit `slot_eligibility`, and `threshold_average` modifiers with selectors, decimal thresholds and target `self` or `opponent`.
 
-- `max_substitutions`.
-- `substitution_mode: "ordered_slots"`: process absent starter slots in submitted order and use the first unused bench player with a valid vote whose role is eligible for that slot.
-- `slot_eligibility` as above.
-- `modifiers` of `type: "threshold_average"`, applied after replacements. A modifier contains `selectors`, each with explicit `slots` and `take_best`, plus descending or unsorted `{min, points}` thresholds and optional `target: "self"|"opponent"`.
+`ordered_slots` is a primitive, not Classic Dynamic/Hybrid or a complete Mantra Basic/Easy/Master engine.
 
-For example, goalkeeper plus the best three of four defenders can be represented as two selectors: `{slots:["P"], take_best:1}` and `{slots:["D1","D2","D3","D4"], take_best:3}`. Selection and average use `base_vote`, not `fantasy_points`. If a selected effective player lacks `base_vote`, scoring fails rather than inventing it.
+## `evaluate_lineups.py`
 
-The scorer returns the effective lineup, substitutions, player total, self modifier total, opponent adjustment and total. `target:"opponent"` is reported separately and is not subtracted from one's own total because the caller may be scoring both sides.
+Compares complete supplied candidate lineups over a supplied weighted scenario ensemble. Every candidate is scored inside every scenario after substitutions and nonlinear modifiers; weights are then normalized and used to compute expected score and dispersion.
 
-Unknown rule keys and unsupported modifier types are errors, not silently ignored features. `ordered_slots` is a primitive, not Classic Dynamic/Hybrid and not Mantra Basic/Easy/Master. Captaincy, office reserves, Switch, module-changing substitutions, relative/opponent-input modifiers and arbitrary custom formulas must be resolved manually or by another verified engine.
+`optimality: best_among_supplied_candidates_only` proves only the ranking of that candidate set under the supplied scenarios. Generate enough materially different candidates when nonlinear rules could make unusual formations or bench orders competitive.
 
-## Nonlinear rules and expectation
+## Nonlinear expectation
 
-A threshold function must be applied inside each scenario. In general `E[f(X)]` is not `f(E[X])`. When probabilities are defensible, score the relevant scenarios then probability-weight their outputs. When they are not, compare a few plausible scenarios qualitatively instead of inventing a distribution.
+Apply threshold functions inside each scenario. In general `E[f(X)] != f(E[X])`. If probabilities are not defensible, compare named scenarios and report flip conditions instead of inventing a distribution.
 
-Keep player forecasting separate from rule calculation. A deterministic script proving that one supplied scenario scores 72.5 does not prove that scenario is likely.
+## Decision modes
+
+- **exact additive optimum**: `optimize_lineup.py` ran and all material effects fit the additive contract;
+- **best among supplied scenarios/candidates**: `evaluate_lineups.py` ran over explicit lineups and scenarios;
+- **deterministic score/validation**: calculators checked arithmetic or legality but did not optimize the forecast;
+- **qualitative/conditional**: quantitative inputs or executable rule coverage were insufficient.
+
+Never upgrade a weaker mode into a stronger claim in prose.
