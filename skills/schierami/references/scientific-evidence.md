@@ -2,6 +2,8 @@
 
 This document separates evidence from inference. It does not claim that academic research can guarantee a fantasy-football win. It identifies findings that can improve repeated pre-deadline decisions and states when a rule is transferred or derived.
 
+For the origin of Schierami's executable equations, algorithms, metrics and hyperparameters, use [method provenance](method-provenance.md). A scientific paper may support the decision principle without supplying the exact formula implemented in the repository.
+
 ## Evidence grades
 
 - **Grade A - direct:** peer-reviewed research on soccer fantasy games, or a systematic review directly relevant to the decision mechanism.
@@ -25,6 +27,8 @@ Mathematical-programming studies on soccer fantasy games model the problem as co
 
 **Operational rule:** compare complete legal modules, including structural bonuses and replacement rules. Do not simply choose the highest-ranked player at each position.
 
+**Implementation note:** this supports the whole-lineup constrained-optimization principle. Schierami's exact additive objective, contracts and branch-and-bound implementation are not claimed to be equations copied from these papers; see [method provenance](method-provenance.md).
+
 Sources:
 
 - Bonomo, Duran & Marenco (2014), *Mathematical programming as a tool for virtual soccer coaches: a case study of a fantasy sport game*. https://doi.org/10.1111/itor.12068
@@ -36,6 +40,8 @@ Sources:
 The Bonomo model explicitly included a starting-lineup factor and emphasized good substitutes. OpenFPL found that advanced models beat a last-five-points baseline, but the commercial comparator remained strongest at identifying zero-point/non-playing cases; the paper attributes part of that edge to proprietary expected-minutes projections.
 
 **Operational rule:** estimate start probability, substitute probability, expected minutes and vote probability before comparing upside. A strong per-90 player is not automatically a strong lineup choice.
+
+**Implementation note:** these papers justify the importance of the variables, not a universal coefficient or Schierami's specific shrinkage equation.
 
 Sources:
 
@@ -138,7 +144,7 @@ Source: Matthews, Ramchurn & Chalkiadakis (2012), *Competing with Humans at Fant
 
 ## Derived rules from game mechanics
 
-These rules are not empirical findings. They follow from the scoring system once its inputs are known.
+These rules are not empirical findings. They follow from the scoring system once its inputs are known. In the provenance taxonomy they are primarily **league-derived**, sometimes combined with standard mathematical methods.
 
 ### D1. Correct objective
 
@@ -165,7 +171,9 @@ Apply threshold functions inside scenarios. In general `E[f(X)]` is not equal to
 - Most direct evidence comes from FPL or other soccer fantasy formats with different scoring and transfer rules.
 - Automated event ratings are not the same as Italian editorial votes.
 - Exact weights for minutes, matchup, xG, form and risk are not universal constants.
+- Schierami's shrinkage strength, exact peer pool, sample caps, reliability-bin count and numerical guardrails are engineering choices unless separately validated.
+- A standard mathematical method used by Schierami does not become literature-derived merely because a cited paper uses a related optimization or forecasting framework.
 - Retrospective top-percentile results can overstate future performance through model selection and season-specific fit.
 - Preprints should be treated as provisional until peer review and independent replication.
 
-Schierami should therefore use the literature to define priorities, debias decisions and represent uncertainty, while adapting every choice to current evidence from the relevant real competition and the user's actual fantasy rules.
+Schierami should therefore use the literature to define priorities, debias decisions and represent uncertainty, while adapting every choice to current evidence from the relevant real competition and the user's actual fantasy rules. When explaining an implemented formula, also classify its provenance using [method provenance](method-provenance.md).
