@@ -4,6 +4,8 @@ The bundled scripts are local calculators and optimizers, not a hosted backend a
 
 The method separates four layers: rules determine legality and scoring; forecasts/scenarios describe uncertainty; optimization chooses an action for an explicit objective; evaluation measures whether that process improves decisions over time. A correct optimizer fed invented projections is not a scientific forecast.
 
+For the provenance of each executable formula, algorithm and numerical convention, read [method provenance](method-provenance.md). In particular, do not describe a standard optimization method, league-derived scoring rule or project engineering choice as a formula taken directly from the cited fantasy-football papers.
+
 ## Contract guarantees
 
 The deterministic tools reject unknown supported-contract keys, malformed booleans/counts, duplicate identities where ambiguous, missing valid-vote scores and non-finite numeric values. Threshold arithmetic uses decimal comparison, so exact boundaries such as `6.1` are not lost to binary floating-point error.
@@ -44,6 +46,8 @@ Supported objective: `additive_expected_fantasy_points`.
 
 `optimality: proven_within_supported_model` means no other legal XI in the declared formations scores higher under those supplied additive projections and constraints. It does not include bench order, substitution outcomes, nonlinear modifiers, correlated scenarios, opponent score, win probability or standings points.
 
+The additive objective and branch-and-bound search are standard optimization methods applied to the supplied fantasy constraints. The fantasy-team-selection literature motivates whole-lineup constrained optimization, but Schierami's exact contract and implementation are project-specific and must not be described as copied equations from those papers.
+
 ## `score_scenario.py`
 
 Scores one explicit realized or hypothetical outcome. Each starter supplies `player_id`, `slot`, `roles`, exact boolean `valid_vote`, and `fantasy_points` when valid; `base_vote` is required when selected by a modifier. Bench rows omit `slot`.
@@ -72,6 +76,8 @@ Existing v1 inputs must add the actual formation and legality settings, not defa
 Apply threshold functions inside each scenario. In general `E[f(X)] != f(E[X])`. If probabilities are not defensible, compare named scenarios and report flip conditions instead of inventing a distribution.
 
 For head-to-head leagues, the preferred decision objective is expected standings utility when defensible opponent scenarios and the goal-conversion rules are available. If they are not, optimize own expected fantasy score only as an explicit lower-scope fallback.
+
+These nonlinear and expected-utility calculations are standard mathematical consequences of the scoring/objective once the league rules and scenario distribution are supplied; they are not empirical formulas learned from the cited fantasy papers.
 
 ## Decision modes
 

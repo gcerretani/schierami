@@ -10,6 +10,37 @@ source-history dates, not retrospective publication claims.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-09-06
+
+### Added
+
+- A canonical `method-provenance.md` map classifying executable methods and formulas
+  as `literature-derived`, `standard-method`, `league-derived` or
+  `engineering-choice`.
+- Explicit attribution rules for assistants explaining whether a formula or
+  algorithm actually comes from a cited paper.
+
+### Changed
+
+- Scientific evidence, deterministic scoring and forecasting documentation now
+  distinguish research-supported decision principles from project-specific
+  equations, algorithms, hyperparameters and numerical guardrails.
+- The historical shrinkage equation, peer-pool definition, prior strength, windows,
+  block representation, caps, reliability bins and clipping epsilon are explicitly
+  identified as engineering choices unless separately validated.
+- Brier score, logarithmic loss, CRPS and rolling-origin evaluation retain their
+  literature-backed methodological attribution without implying validation of the
+  football forecast itself.
+- The README and skill control plane now direct formula-origin questions to the
+  provenance map, preventing standard methods or league rules from being presented
+  as equations copied from fantasy-football papers.
+
+### Scope
+
+- No scoring, optimization or forecasting behavior changes in this patch beyond the
+  package/engine version alignment required for release consistency.
+- No new predictive-performance or calibration claim is introduced.
+
 ## [0.5.0] - 2026-09-06
 
 ### Added
@@ -162,7 +193,8 @@ Source snapshot: `daf42244c89f89b10891921eca55f1593f543ed0`.
 
 Source snapshot: `fdbdcd26370cc50dde367c04baf0b8ffe4597a04`.
 
-[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/gcerretani/schierami/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/gcerretani/schierami/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/gcerretani/schierami/releases/tag/v0.4.0
 [0.3.1]: https://github.com/gcerretani/schierami/compare/v0.3.0...v0.3.1
