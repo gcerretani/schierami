@@ -1,6 +1,6 @@
 {
   "name": "schierami",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Rule-aware fantasy soccer lineup assistant for Classic, Mantra, and custom leagues.",
   "homepage": "https://github.com/gcerretani/schierami",
   "repository": "https://github.com/gcerretani/schierami",
@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "Schierami",
     "shortDescription": "Rule-aware fantasy soccer lineup and bench advice",
-    "longDescription": "Schierami combines your roster, actual league rules, current football evidence, and deterministic optimization to recommend legal lineups, bench order, captain choices, and close-call decisions without assuming one platform or scoring preset.",
+    "longDescription": "Schierami combines your roster, actual league rules, source-backed football evidence, and deterministic optimization to recommend legal lineups, bench order, captain choices, and close-call decisions while keeping quantitative claims scoped to the data and rules actually supported.",
     "category": "Sports",
     "capabilities": ["Read"],
     "websiteURL": "https://github.com/gcerretani/schierami",

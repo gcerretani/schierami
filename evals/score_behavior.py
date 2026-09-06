@@ -24,6 +24,10 @@ def score_case(case: dict[str, Any], run: dict[str, Any]) -> list[str]:
     expect = case.get("expect", {})
     if "decision_modes" in expect and run.get("decision_mode") not in expect["decision_modes"]:
         errors.append(f"decision_mode={run.get('decision_mode')!r} not in {expect['decision_modes']!r}")
+    if "completion_status" in expect and run.get("completion_status") != expect["completion_status"]:
+        errors.append(f"completion_status={run.get('completion_status')!r} != {expect['completion_status']!r}")
+    if "claim_scopes" in expect and run.get("claim_scope") not in expect["claim_scopes"]:
+        errors.append(f"claim_scope={run.get('claim_scope')!r} not in {expect['claim_scopes']!r}")
 
     checks = run.get("checks", {})
     if not isinstance(checks, dict):
@@ -51,6 +55,9 @@ def score_case(case: dict[str, Any], run: dict[str, Any]) -> list[str]:
     for item in expect.get("must_run_scripts", []):
         if item not in scripts:
             errors.append(f"required deterministic execution missing: {item}")
+    for item in expect.get("must_not_run_scripts", []):
+        if item in scripts:
+            errors.append(f"forbidden deterministic execution present: {item}")
 
     claims = run.get("claims", [])
     if not isinstance(claims, list):

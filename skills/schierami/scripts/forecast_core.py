@@ -10,7 +10,7 @@ from typing import Any, Callable
 
 from _core import ContractError, require_bool, require_int, require_string
 
-ENGINE_VERSION = "0.4.0"
+ENGINE_VERSION = "0.5.0"
 SCOPE = {"competition", "season", "scoring_id", "vote_provider"}
 OUTCOME = {"player_id", "started", "minutes", "valid_vote", "base_vote", "fantasy_points"}
 

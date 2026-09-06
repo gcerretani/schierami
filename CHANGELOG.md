@@ -10,6 +10,43 @@ source-history dates, not retrospective publication claims.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-09-06
+
+### Added
+
+- A full-lineup scientific completion gate in `run_lineup.py`, with canonical
+  observable checks for roster, rules, data quality, availability, candidate
+  screening and deterministic calculation.
+- Explicit completion claim scopes: `full_rule_quantitative`,
+  `partial_quantitative`, `conditional_only` and `incomplete`.
+- Behavioral evaluations for missing modifiers with available baselines,
+  genuinely blocked quantitative inputs and false precision around decimal model
+  differences.
+
+### Changed
+
+- Full-lineup requests must attempt the strongest defensible quantitative layer
+  instead of treating qualitative football reasoning as an equivalent shortcut.
+- Missing material rules remain local blockers: a defense modifier can block the
+  real-rule optimum while an independent legality check or additive baseline still
+  runs when its inputs are defensible.
+- Decisive numeric observations are now explicitly subject to a data-certainty gate:
+  prefer source-backed vote/fantasy-vote/bonus-malus/appearance data, preserve
+  conflicts and distinguish exact arithmetic from forecast uncertainty.
+- Scientific references are treated as methodological constraints rather than a
+  source of invented universal coefficients or pseudo-precise expected points.
+- Head-to-head guidance prefers standings-aware utility when defensible opponent
+  scenarios exist, with own expected fantasy score retained as an explicit fallback.
+
+### Compatibility and scope
+
+- Existing low-level deterministic payloads remain supported. The stricter
+  completion preflight is activated by `request.kind: "full_lineup"`.
+- No backend, scraper, private dataset, external runtime dependency or automatic
+  lineup submission is introduced.
+- This release improves process compliance and claim discipline; it does not claim
+  improved real-world predictive accuracy or calibration.
+
 ## [0.4.0] - 2026-09-05
 
 ### Added
@@ -125,7 +162,8 @@ Source snapshot: `daf42244c89f89b10891921eca55f1593f543ed0`.
 
 Source snapshot: `fdbdcd26370cc50dde367c04baf0b8ffe4597a04`.
 
-[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/gcerretani/schierami/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/gcerretani/schierami/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/gcerretani/schierami/releases/tag/v0.4.0
 [0.3.1]: https://github.com/gcerretani/schierami/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/gcerretani/schierami/compare/v0.2.1...v0.3.0

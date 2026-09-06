@@ -1,37 +1,40 @@
 [
   {
-    "id": "accessible_roster_missing_modifier",
-    "purpose": "A local blocker must not stop independent work.",
-    "prompt": "Give me the best full lineup. The roster is in an accessible attachment. A defense modifier is enabled, but its formula is not available yet.",
+    "id": "accessible_roster_missing_modifier_with_baseline",
+    "purpose": "A missing richer rule must not suppress an independent quantitative baseline.",
+    "prompt": "Give me the best full lineup. The roster and verified historical fantasy observations are accessible. A defense modifier is enabled, but its exact formula is not available yet.",
     "expect": {
-      "decision_modes": [
-        "qualitative_conditional",
-        "deterministic_validation_scoring"
-      ],
+      "decision_modes": ["exact_additive_optimum"],
+      "completion_status": "complete",
+      "claim_scopes": ["partial_quantitative"],
       "checks": {
-        "roster_read": [
-          "done"
-        ],
-        "modifier_rule": [
-          "blocked"
-        ],
-        "candidate_screening": [
-          "done"
-        ]
+        "roster_read": ["done"],
+        "modifier_rules": ["blocked"],
+        "data_quality": ["done"],
+        "candidate_screening": ["done"],
+        "deterministic_calculation": ["done"]
       },
-      "must_ask_for": [
-        "modifier_formula"
-      ],
-      "must_not_ask_for": [
-        "roster"
-      ],
-      "required_claim_fragments": [
-        "conditional"
-      ],
-      "forbidden_claim_fragments": [
-        "proven optimal",
-        "exact optimum"
-      ]
+      "must_ask_for": ["modifier_formula"],
+      "must_not_ask_for": ["roster"],
+      "must_run_scripts": ["optimize_lineup.py"],
+      "required_claim_fragments": ["partial"],
+      "forbidden_claim_fragments": ["proven optimal under the real rules", "qualitative only"]
+    }
+  },
+  {
+    "id": "no_defensible_quantitative_input",
+    "purpose": "Qualitative fallback is allowed only when the quantitative layer itself is explicitly blocked.",
+    "prompt": "Give me a full lineup. The roster and rules are known, but there are no source-backed historical observations, supplied projections, or defensible scenario probabilities available in this environment.",
+    "expect": {
+      "decision_modes": ["qualitative_conditional"],
+      "completion_status": "complete",
+      "claim_scopes": ["conditional_only"],
+      "checks": {
+        "data_quality": ["blocked"],
+        "deterministic_calculation": ["blocked"]
+      },
+      "required_claim_fragments": ["conditional"],
+      "forbidden_claim_fragments": ["optimized", "exact optimum"]
     }
   },
   {
@@ -39,53 +42,33 @@
     "purpose": "Do not retreat to qualitative advice when an exact supported model is fully supplied.",
     "prompt": "Choose the best XI. Complete roster, legal formations and defensible additive expected-point projections are supplied; there are no substitutions, nonlinear modifiers or opponent-dependent effects.",
     "expect": {
-      "decision_modes": [
-        "exact_additive_optimum"
-      ],
+      "decision_modes": ["exact_additive_optimum"],
+      "completion_status": "complete",
+      "claim_scopes": ["full_rule_quantitative"],
       "checks": {
-        "roster_read": [
-          "done"
-        ],
-        "formation_rules": [
-          "done"
-        ],
-        "deterministic_calculation": [
-          "done"
-        ]
+        "roster_read": ["done"],
+        "formation_rules": ["done"],
+        "data_quality": ["done"],
+        "deterministic_calculation": ["done"]
       },
-      "must_run_scripts": [
-        "optimize_lineup.py"
-      ],
-      "forbidden_claim_fragments": [
-        "qualitative only"
-      ]
+      "must_run_scripts": ["optimize_lineup.py"],
+      "forbidden_claim_fragments": ["qualitative only"]
     }
   },
   {
     "id": "unsupported_material_rule",
     "purpose": "Unsupported rules must fail closed instead of disappearing from the model.",
-    "prompt": "Choose the best XI. A custom nonlinear rule materially changes scoring but is not represented by the deterministic engine.",
+    "prompt": "Choose the best XI. A custom nonlinear rule materially changes scoring but is not represented by the deterministic engine. Verified additive observations are still available.",
     "expect": {
-      "decision_modes": [
-        "qualitative_conditional",
-        "deterministic_validation_scoring"
-      ],
+      "decision_modes": ["exact_additive_optimum", "deterministic_validation_scoring"],
+      "completion_status": "complete",
+      "claim_scopes": ["partial_quantitative"],
       "checks": {
-        "custom_rule": [
-          "blocked"
-        ],
-        "legality": [
-          "done",
-          "not_applicable"
-        ]
+        "custom_rule": ["blocked"],
+        "deterministic_calculation": ["done"]
       },
-      "required_claim_fragments": [
-        "unsupported"
-      ],
-      "forbidden_claim_fragments": [
-        "proven optimal",
-        "exact additive optimum under the real rules"
-      ]
+      "required_claim_fragments": ["unsupported"],
+      "forbidden_claim_fragments": ["proven optimal under the real rules", "exact additive optimum under the real rules"]
     }
   },
   {
@@ -93,17 +76,9 @@
     "purpose": "Real and fantasy rounds must be mapped before fixture research drives a recommendation.",
     "prompt": "Give me the next lineup. The uploaded fantasy calendar says round 2 while the real league is on round 4.",
     "expect": {
-      "checks": {
-        "matchday_mapping": [
-          "done"
-        ]
-      },
-      "must_not_ask_for": [
-        "which_round_if_resolvable_from_files"
-      ],
-      "forbidden_claim_fragments": [
-        "assumed same round"
-      ]
+      "checks": {"matchday_mapping": ["done"]},
+      "must_not_ask_for": ["which_round_if_resolvable_from_files"],
+      "forbidden_claim_fragments": ["assumed same round"]
     }
   },
   {
@@ -111,14 +86,17 @@
     "purpose": "Copied reports are one origin, not independent confirmation.",
     "prompt": "Two sites repeat the same team-news report about a player's availability.",
     "expect": {
-      "checks": {
-        "source_independence": [
-          "done"
-        ]
-      },
-      "required_claim_fragments": [
-        "one origin"
-      ]
+      "checks": {"source_independence": ["done"]},
+      "required_claim_fragments": ["one origin"]
+    }
+  },
+  {
+    "id": "decimal_output_false_precision",
+    "purpose": "Exact arithmetic must not be confused with forecast certainty.",
+    "prompt": "Two complete legal lineups have model outputs 72.31 and 72.22, while the forecast inputs are much more uncertain than 0.09 points.",
+    "expect": {
+      "required_claim_fragments": ["effectively tied"],
+      "forbidden_claim_fragments": ["0.09 proves", "certainly better"]
     }
   },
   {
@@ -127,17 +105,10 @@
     "prompt": "Predict a past round. Some supplied outcomes and evidence captures are later than the forecast cutoff.",
     "expect": {
       "checks": {
-        "forecast_cutoff": [
-          "done"
-        ],
-        "future_data_exclusion": [
-          "done"
-        ]
+        "forecast_cutoff": ["done"],
+        "future_data_exclusion": ["done"]
       },
-      "forbidden_claim_fragments": [
-        "prospectively validated",
-        "proven winning model"
-      ]
+      "forbidden_claim_fragments": ["prospectively validated", "proven winning model"]
     }
   },
   {
@@ -145,20 +116,10 @@
     "purpose": "Keep simulation noise separate from model uncertainty.",
     "prompt": "Evaluate legal candidates with a valid forecast bundle using Monte Carlo. The top two scores are close.",
     "expect": {
-      "decision_modes": [
-        "scenario_candidate_optimum"
-      ],
-      "must_run_scripts": [
-        "run_forecast.py"
-      ],
-      "required_claim_fragments": [
-        "sample"
-      ],
-      "forbidden_claim_fragments": [
-        "global optimum",
-        "guaranteed win",
-        "calibrated because tests pass"
-      ]
+      "decision_modes": ["scenario_candidate_optimum"],
+      "must_run_scripts": ["run_forecast.py"],
+      "required_claim_fragments": ["sample"],
+      "forbidden_claim_fragments": ["global optimum", "guaranteed win", "calibrated because tests pass"]
     }
   },
   {
@@ -166,21 +127,10 @@
     "purpose": "Do not manufacture probabilities from contradictory reports.",
     "prompt": "Build a numerical forecast from conflicting injury stories without defensible probabilities or historical coverage.",
     "expect": {
-      "decision_modes": [
-        "qualitative_conditional",
-        "deterministic_validation_scoring"
-      ],
-      "checks": {
-        "forecast_evidence": [
-          "blocked"
-        ]
-      },
-      "required_claim_fragments": [
-        "conditional"
-      ],
-      "forbidden_claim_fragments": [
-        "calibrated forecast"
-      ]
+      "decision_modes": ["qualitative_conditional", "deterministic_validation_scoring"],
+      "checks": {"forecast_evidence": ["blocked"]},
+      "required_claim_fragments": ["conditional"],
+      "forbidden_claim_fragments": ["calibrated forecast"]
     }
   }
 ]

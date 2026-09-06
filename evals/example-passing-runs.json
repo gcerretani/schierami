@@ -1,50 +1,60 @@
 [
   {
-    "case_id": "accessible_roster_missing_modifier",
-    "decision_mode": "qualitative_conditional",
+    "case_id": "accessible_roster_missing_modifier_with_baseline",
+    "decision_mode": "exact_additive_optimum",
+    "completion_status": "complete",
+    "claim_scope": "partial_quantitative",
     "checks": {
       "roster_read": "done",
-      "modifier_rule": "blocked",
-      "candidate_screening": "done"
+      "modifier_rules": "blocked",
+      "data_quality": "done",
+      "candidate_screening": "done",
+      "deterministic_calculation": "done"
     },
-    "asked_for": [
-      "modifier_formula"
-    ],
-    "claims": [
-      "The module comparison remains conditional until the modifier formula is known."
-    ],
+    "asked_for": ["modifier_formula"],
+    "claims": ["Partial quantitative result: the additive comparison ran, while the real-rule module ranking remains conditional on the defense modifier."],
+    "scripts_ran": ["optimize_lineup.py"]
+  },
+  {
+    "case_id": "no_defensible_quantitative_input",
+    "decision_mode": "qualitative_conditional",
+    "completion_status": "complete",
+    "claim_scope": "conditional_only",
+    "checks": {
+      "data_quality": "blocked",
+      "deterministic_calculation": "blocked"
+    },
+    "asked_for": [],
+    "claims": ["Conditional only: no source-backed observations or defensible scenarios are available for a quantitative comparison."],
     "scripts_ran": []
   },
   {
     "case_id": "complete_additive_contract",
     "decision_mode": "exact_additive_optimum",
+    "completion_status": "complete",
+    "claim_scope": "full_rule_quantitative",
     "checks": {
       "roster_read": "done",
       "formation_rules": "done",
+      "data_quality": "done",
       "deterministic_calculation": "done"
     },
     "asked_for": [],
-    "claims": [
-      "Exact additive optimum within the supplied supported model."
-    ],
-    "scripts_ran": [
-      "optimize_lineup.py"
-    ]
+    "claims": ["Exact additive optimum within the supplied supported model."],
+    "scripts_ran": ["optimize_lineup.py"]
   },
   {
     "case_id": "unsupported_material_rule",
-    "decision_mode": "qualitative_conditional",
+    "decision_mode": "exact_additive_optimum",
+    "completion_status": "complete",
+    "claim_scope": "partial_quantitative",
     "checks": {
       "custom_rule": "blocked",
-      "legality": "done"
+      "deterministic_calculation": "done"
     },
     "asked_for": [],
-    "claims": [
-      "The material custom rule is unsupported by the deterministic engine, so no real-rules optimum is claimed."
-    ],
-    "scripts_ran": [
-      "validate_lineup.py"
-    ]
+    "claims": ["Partial quantitative result: the unsupported custom rule prevents a real-rules optimum claim."],
+    "scripts_ran": ["optimize_lineup.py"]
   },
   {
     "case_id": "matchday_mismatch",
@@ -53,9 +63,7 @@
       "matchday_mapping": "done"
     },
     "asked_for": [],
-    "claims": [
-      "Fantasy round 2 is mapped to the relevant real-league round before fixture evaluation."
-    ],
+    "claims": ["Fantasy round 2 is mapped to the relevant real-league round before fixture evaluation."],
     "scripts_ran": []
   },
   {
@@ -65,9 +73,15 @@
       "source_independence": "done"
     },
     "asked_for": [],
-    "claims": [
-      "The repeated reports are treated as one origin, not independent confirmation."
-    ],
+    "claims": ["The repeated reports are treated as one origin, not independent confirmation."],
+    "scripts_ran": []
+  },
+  {
+    "case_id": "decimal_output_false_precision",
+    "decision_mode": "scenario_candidate_optimum",
+    "checks": {},
+    "asked_for": [],
+    "claims": ["The two model outputs are effectively tied because forecast uncertainty is materially larger than the 0.09-point difference."],
     "scripts_ran": []
   },
   {
@@ -78,24 +92,16 @@
       "future_data_exclusion": "done"
     },
     "asked_for": [],
-    "claims": [
-      "Illustrative reconstructed evaluation only."
-    ],
-    "scripts_ran": [
-      "build_forecasts.py"
-    ]
+    "claims": ["Illustrative reconstructed evaluation only."],
+    "scripts_ran": ["build_forecasts.py"]
   },
   {
     "case_id": "forecast_sample_optimality",
     "decision_mode": "scenario_candidate_optimum",
     "checks": {},
     "asked_for": [],
-    "claims": [
-      "Best supplied candidate on this sample; sampling noise is separate from forecast error."
-    ],
-    "scripts_ran": [
-      "run_forecast.py"
-    ]
+    "claims": ["Best supplied candidate on this sample; sampling noise is separate from forecast error."],
+    "scripts_ran": ["run_forecast.py"]
   },
   {
     "case_id": "forecast_conflicted_source",
@@ -104,9 +110,7 @@
       "forecast_evidence": "blocked"
     },
     "asked_for": [],
-    "claims": [
-      "The comparison remains conditional on resolved evidence."
-    ],
+    "claims": ["The comparison remains conditional on resolved evidence."],
     "scripts_ran": []
   }
 ]
