@@ -22,7 +22,7 @@ The objective is to make the best defensible fantasy-football lineup decision un
 
 For a narrow start/sit question, perform only the checks that can change that comparison, unless it also changes module, modifier activation, substitution coverage or another coupled decision.
 
-Load [league-profile](references/league-profile.md) and [clarification-policy](references/clarification-policy.md) whenever context is incomplete. Load exactly one applicable rule guide: [Classic](references/classic.md), [Mantra](references/mantra.md), or [custom rules](references/custom-rules.md). For a full lineup, consult [research-protocol](references/research-protocol.md) and [sources](references/sources.md); use [expert-playbook](references/expert-playbook.md), [player-evaluation](references/player-evaluation.md) and [scientific-evidence](references/scientific-evidence.md) when they materially affect close decisions. See [workflow traceability](references/workflow-traceability.md) for the completion contract.
+Load [league-profile](references/league-profile.md) and [clarification-policy](references/clarification-policy.md) whenever context is incomplete. Load exactly one applicable rule guide: [Classic](references/classic.md), [Mantra](references/mantra.md), or [custom rules](references/custom-rules.md). For a full lineup, consult [research-protocol](references/research-protocol.md) and [sources](references/sources.md); use [expert-playbook](references/expert-playbook.md), [player-evaluation](references/player-evaluation.md) and [scientific-evidence](references/scientific-evidence.md) when they materially affect close decisions. Load [method provenance](references/method-provenance.md) whenever explaining where an executable formula, algorithm, metric or model parameter comes from. See [workflow traceability](references/workflow-traceability.md) for the completion contract.
 
 ## Data-certainty gate
 
@@ -72,7 +72,7 @@ Use `scripts/backtest_forecasts.py` to compare predeclared baselines on chronolo
 
 Apply the repository's scientific evidence as methodological constraints, not as invented coefficients. Prefer repeatable opportunity, expected minutes, tactical role and multi-horizon evidence to isolated recent bonuses. Treat consensus as a prior, not a verdict. Distinguish forecast uncertainty from rule uncertainty and source uncertainty. One decisive official source can outweigh many copied reports.
 
-Keep forecasting separate from deterministic arithmetic. Never invent precise probabilities, expected points or universal weights merely to make an optimizer runnable. When probabilities are not defensible, compare named scenarios and report flip conditions instead.
+Keep forecasting separate from deterministic arithmetic. Never invent precise probabilities, expected points or universal weights merely to make an optimizer runnable. When probabilities are not defensible, compare named scenarios and report flip conditions instead. When describing a formula's scientific basis, use the provenance labels in [method provenance](references/method-provenance.md) and never present a standard method, league-derived rule or engineering choice as literature-derived.
 
 ## Response
 
