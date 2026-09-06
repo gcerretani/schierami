@@ -8,6 +8,22 @@ The method separates four layers: rules determine legality and scoring; forecast
 
 The deterministic tools reject unknown supported-contract keys, malformed booleans/counts, duplicate identities where ambiguous, missing valid-vote scores and non-finite numeric values. Threshold arithmetic uses decimal comparison, so exact boundaries such as `6.1` are not lost to binary floating-point error.
 
+Observed numeric inputs and deterministic arithmetic should be as exact as their sources. Forecasts are different: decimal outputs do not imply decimal predictive certainty. Keep measurement precision, rule precision and forecast uncertainty separate in both traces and prose.
+
+## `run_lineup.py`
+
+`run_lineup.py` is the preferred dispatcher. It selects the strongest supported deterministic mode from explicit supplied inputs and emits a run report. It never manufactures missing rules, observations, expected points or probabilities.
+
+Version 0.5 adds an optional request envelope:
+
+```json
+{"request": {"kind": "full_lineup"}}
+```
+
+For `full_lineup`, the dispatcher enforces an observable completion preflight. The trace must contain the canonical checks documented in [workflow traceability](workflow-traceability.md). A full lineup without deterministic execution is complete only when an explicit blocker states that `deterministic_calculation` or `quantitative_comparison` itself is blocked. Missing a richer rule does not justify skipping an independent lower-scope calculation.
+
+The completion report distinguishes `full_rule_quantitative`, `partial_quantitative`, `conditional_only` and `incomplete`. This scope is separate from the optimizer's own mathematical optimality field.
+
 ## `validate_lineup.py`
 
 Input is exactly `roster`, `lineup` and `rules`. It checks ownership, duplicate use, exact counts, formation slots, role eligibility, bench limit, captain placement, locked starters and excluded players. It does not infer platform settings, official role tables or conditional Mantra logic.
@@ -55,16 +71,18 @@ Existing v1 inputs must add the actual formation and legality settings, not defa
 
 Apply threshold functions inside each scenario. In general `E[f(X)] != f(E[X])`. If probabilities are not defensible, compare named scenarios and report flip conditions instead of inventing a distribution.
 
+For head-to-head leagues, the preferred decision objective is expected standings utility when defensible opponent scenarios and the goal-conversion rules are available. If they are not, optimize own expected fantasy score only as an explicit lower-scope fallback.
+
 ## Decision modes
 
-- **exact additive optimum**: `optimize_lineup.py` ran and all material effects fit the additive contract;
-- **best among supplied scenarios/candidates**: `evaluate_lineups.py` ran over explicit lineups and scenarios;
+- **exact additive optimum**: `optimize_lineup.py` ran and all effects represented by the additive contract were optimized exactly;
+- **best among supplied scenarios/candidates**: `evaluate_lineups.py` or `run_forecast.py` ran over explicit lineups/scenarios;
 - **deterministic score/validation**: calculators checked arithmetic or legality but did not optimize the forecast;
-- **qualitative/conditional**: quantitative inputs or executable rule coverage were insufficient.
+- **qualitative/conditional**: quantitative inputs or executable rule coverage were insufficient for a ranking contract.
 
-Never upgrade a weaker mode into a stronger claim in prose.
+Never upgrade a weaker mode into a stronger claim in prose. In particular, an exact additive optimum can still be only `partial_quantitative` under the real league rules when a material modifier, substitution rule or opponent-aware objective remains unresolved.
 
-## Forecast bridge (0.4)
+## Forecast bridge (0.4+)
 
 `build_forecasts.py`, `run_forecast.py` and `backtest_forecasts.py` add a separately
 versioned probabilistic layer; read [forecasting](forecasting.md) before use.
