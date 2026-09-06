@@ -44,8 +44,12 @@ not invented certainty.
 
 The method is informed by research on fantasy sports and football analytics.
 See the [evidence-to-rule map](skills/schierami/references/scientific-evidence.md)
-for papers, transfer limits and mathematical deductions. These references do not
-prove that this skill has better predictive performance than alternatives.
+for papers, transfer limits and mathematical deductions. See the
+[method-provenance map](skills/schierami/references/method-provenance.md) for the
+origin of implemented formulas, algorithms, metrics and engineering parameters.
+A method may be scientifically consistent without being an equation copied from a
+cited paper. These references do not prove that this skill has better predictive
+performance than alternatives.
 
 ## Forecasting and evaluation
 
