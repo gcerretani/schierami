@@ -27,6 +27,10 @@ The code separates prediction, scoring, candidate selection and outcome evaluati
 An imported forecast is not automatically calibrated. A schema/hash validates
 structure/identity, not whether evidence or probabilities are true.
 
+For the provenance of formulas, metrics and engineering parameters in this layer,
+read [method provenance](method-provenance.md). Methodological literature can justify
+an evaluation principle without making every implementation detail literature-derived.
+
 ## Historical baseline
 
 Run `scripts/build_forecasts.py` with JSON on standard input. The executable
@@ -72,13 +76,15 @@ prior strength. Thus, for n > 0 and peers available:
 
 `F_player = (n * F_recent + alpha * F_peers) / (n + alpha)`.
 
-Alpha is an engineering hyperparameter, **not a universal literature-derived
-constant**. Predeclare it or tune only on earlier inner training folds. Alpha zero
-is the recent-player baseline. With no own history, the peer empirical distribution
-is an explicitly marked cold-start fallback; with no peers, use own history and
-report unavailable shrinkage. With neither, fail rather than invent a prior.
-Peer outcomes preserve their internal minutes/vote/point relationship but this is
-an exchangeability assumption, not a player-specific structural football model.
+This shrinkage equation, exact-role peer pool, `alpha`, window and lookback are
+**engineering choices**, not formulas or constants established by the cited
+fantasy-football papers. Predeclare them or tune only on earlier inner training
+folds. Alpha zero is the recent-player baseline. With no own history, the peer
+empirical distribution is an explicitly marked cold-start fallback; with no peers,
+use own history and report unavailable shrinkage. With neither, fail rather than
+invent a prior. Peer outcomes preserve their internal minutes/vote/point relationship
+but this is an exchangeability assumption, not a player-specific structural football
+model.
 
 Only outcomes available and evidence captured by `as_of` enter the estimate.
 Late rows are counted in `excluded_future_rows`; old rows are counted separately.
@@ -114,6 +120,10 @@ assists, clean sheets or lineup constraints between real clubs. An imported join
 block preserves only the coherence actually encoded by its author; the validator
 cannot infer physical football consistency from aggregate points.
 
+The block representation and independence switch are engineering choices using a
+standard finite-state probabilistic representation. They make assumptions visible;
+they are not claims that the cited papers validate Schierami's dependency model.
+
 ## Scenario decision contract
 
 Run `scripts/run_forecast.py` or supply its payload to `scripts/run_lineup.py`.
@@ -128,6 +138,10 @@ Two explicit sampling modes:
   states, compresses identical draws by frequency, and uses the **same scenarios
   for every candidate**. Samples must be 2 to 10,000. Record Python/runtime version
   alongside the seed for cross-environment reproducibility.
+
+Exact finite-state enumeration and Monte Carlo are standard computational methods.
+The scenario/sample caps are engineering guardrails, not scientifically meaningful
+football constants.
 
 No silent truncation or switch from exact to approximate search occurs. At most
 100,000 candidate-scenario evaluations are accepted. The returned finite-model
@@ -173,6 +187,11 @@ base-vote errors with target/scored/missing counts; ten reliability bins with co
 Impossible events produce `log_loss: null` plus `infinite_log_losses > 0`, not a
 finite disguised score. A separately labelled clipped log loss uses epsilon 1e-15.
 Null never means a perfect or zero loss. Empty conditional vote samples stay null.
+
+Brier score, logarithmic loss and CRPS are literature-backed evaluation methods;
+MAE/RMSE and the paired bootstrap are standard statistical methods. Ten reliability
+bins and epsilon `1e-15` are engineering choices. None of those labels establishes
+that the underlying football forecast is calibrated or superior.
 
 Return per-fold results, training provenance and aggregate metrics. The first model
 is the predeclared reference. Paired fold bootstrap compares equal-fold mean
@@ -223,4 +242,6 @@ are documented engineering choices, not validated universal football constants.
   research reference, not bundled model weights. Its FPL findings are not direct
   evidence for Italian editorial votes or this baseline.
 
-Consult [scientific evidence](scientific-evidence.md) for the broader evidence map.
+Consult [scientific evidence](scientific-evidence.md) for the broader evidence map
+and [method provenance](method-provenance.md) before attributing an implemented
+formula or parameter to scientific literature.
